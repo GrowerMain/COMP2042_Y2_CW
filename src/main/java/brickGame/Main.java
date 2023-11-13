@@ -20,6 +20,26 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.Random;
 
+/**
+ * This class is the main entry point for the Block Game application.
+ * It extends the JavaFX `Application` class and implements the `EventHandler<KeyEvent>`
+ * and `GameEngine.OnAction` interfaces to handle keyboard events and game actions, respectively.
+ * Example usage:
+ * <pre>
+ * {@code
+ * public static void main(String[] args) {
+ *     launch(args);
+ * }
+ * }
+ * </pre>
+ * </p>
+ * <p>The game involves a ball, a paddle, and various blocks. The goal is to destroy the blocks
+ * using the ball, controlled by the paddle, and advance through levels.
+ *
+ * @author Nicholas Lum
+ * @version 1.0
+ */
+
 public class Main extends Application implements EventHandler<KeyEvent>, GameEngine.OnAction {
 
 
@@ -91,6 +111,23 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
     Button load    = null;
     Button newGame = null;
 
+    /**
+     * The main entry point for the application.
+     * Initializes the game and sets up the primary stage.
+     * <p>
+     * Example usage:
+     * <pre>
+     * {@code
+     * public static void main(String[] args) {
+     *     launch(args);
+     * }
+     * }
+     * </pre>
+     * </p>
+     *
+     * @param primaryStage The primary stage for this application.
+     * @throws Exception If an error occurs during application startup.
+     */
     @Override
     public void start(Stage primaryStage) throws Exception {
         this.primaryStage = primaryStage;
@@ -213,11 +250,20 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
         }
     }
 
-
+    /**
+     * The main entry point for the application.
+     *
+     * @param args Command line arguments (not used).
+     */
     public static void main(String[] args) {
         launch(args);
     }
 
+    /**
+     * Handles key events for player input, such as moving the paddle or saving the game.
+     *
+     * @param event The KeyEvent triggered by user input.
+     */
     @Override
     public void handle(KeyEvent event) {
         switch (event.getCode()) {
@@ -239,6 +285,11 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
 
     float oldXBreak;
 
+    /**
+     * Moves the paddle (break) either to the left or right based on the provided direction.
+     *
+     * @param direction The direction of movement (LEFT or RIGHT).
+     */
     private void move(final int direction) {
         new Thread(new Runnable() {
             @Override
@@ -272,7 +323,9 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
 
     }
 
-
+    /**
+     * Initializes the ball's starting position with random coordinates.
+     */
     private void initBall() {
         Random random = new Random();
         xBall = random.nextInt(sceneWidth) + 1;
@@ -281,7 +334,9 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
         ball.setRadius(ballRadius);
         ball.setFill(new ImagePattern(new Image("ball.png")));
     }
-
+    /**
+     * Initializes the paddle (break) with a specified width and height.
+     */
     private void initBreak() {
         rect = new Rectangle();
         rect.setWidth(breakWidth);
@@ -323,6 +378,9 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
         collideToTopBlock = false;
     }
 
+    /**
+     * Sets the physics for the ball's movement, including collisions with the paddle and blocks.
+     */
     private void setPhysicsToBall() {
         //v = ((time - hitTime) / 1000.000) + 1.000;
 
@@ -442,6 +500,9 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
     }
 
 
+    /**
+     * Checks the count of destroyed blocks and triggers actions accordingly.
+     */
     private void checkDestroyedCount() {
         if (destroyedBlockCount == blocks.size()) {
             //TODO win level todo...
@@ -451,6 +512,9 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
         }
     }
 
+    /**
+     * Saves the current game state to a file.
+     */
     private void saveGame() {
         new Thread(new Runnable() {
             @Override
@@ -520,6 +584,9 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
 
     }
 
+    /**
+     * Loads the game state from a saved file.
+     */
     private void loadGame() {
 
         LoadSave loadSave = new LoadSave();
@@ -570,6 +637,9 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
 
     }
 
+    /**
+     * Initializes the game state and components for a new level.
+     */
     private void nextLevel() {
         Platform.runLater(new Runnable() {
             @Override
@@ -602,6 +672,17 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
         });
     }
 
+    /**
+     * Restarts the game with initial settings.
+     * <p>
+     * Example usage:
+     * <pre>
+     * {@code
+     * restartGame();
+     * }
+     * </pre>
+     * </p>
+     */
     public void restartGame() {
 
         try {
@@ -628,7 +709,26 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
         }
     }
 
-
+    /**
+     * Handles game update events and updates the UI elements.
+     */
+    /**
+     * Represents the main game loop where physics and game state updates occur.
+     * <p>
+ *     game update events and updates the UI elements.
+     * </p>
+     * <p>
+     * Example usage:
+     * <pre>
+     * {@code
+     * engine = new GameEngine();
+     * engine.setOnAction(this);
+     * engine.setFps(120);
+     * engine.start();
+     * }
+     * </pre>
+     * </p>
+     */
     @Override
     public void onUpdate() {
         Platform.runLater(new Runnable() {
@@ -706,12 +806,17 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
         }
     }
 
-
+    /**
+     * Initializes actions when the game is first started.
+     */
     @Override
     public void onInit() {
 
     }
 
+    /**
+     * Handles physics-related updates during the game.
+     */
     @Override
     public void onPhysicsUpdate() {
         checkDestroyedCount();
@@ -742,7 +847,11 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
 
     }
 
-
+    /**
+     * Handles the passage of time during the game.
+     *
+     * @param time The current time in milliseconds.
+     */
     @Override
     public void onTime(long time) {
         this.time = time;

@@ -7,6 +7,20 @@ import javafx.scene.shape.Rectangle;
 import java.io.Serializable;
 import java.util.Random;
 
+/**
+ * The {@code Bonus} class represents a bonus object in the game.
+ * <p>
+ * <b>HTML Note:</b> The HTML tags can be used for formatting purposes in the generated Javadocs.
+ * </p>
+ * <p>
+ * Example usage:
+ * <pre>
+ * {@code
+ * Bonus bonus = new Bonus(row, column);
+ * }
+ * </pre>
+ * </p>
+ */
 public class Bonus implements Serializable {
     public Rectangle choco;
 
@@ -15,6 +29,20 @@ public class Bonus implements Serializable {
     public long timeCreated;
     public boolean taken = false;
 
+    /**
+     * Constructs a {@code Bonus} object at the specified row and column.
+     *
+     * @param row    The row at which the bonus is located.
+     * @param column The column at which the bonus is located.
+     * <p>
+     * Example usage:
+     * <pre>
+     * {@code
+     * Bonus bonus = new Bonus(row, column);
+     * }
+     * </pre>
+     * </p>
+     */
     public Bonus(int row, int column) {
         x = (column * (Block.getWidth())) + Block.getPaddingH() + (Block.getWidth() / 2) - 15;
         y = (row * (Block.getHeight())) + Block.getPaddingTop() + (Block.getHeight() / 2) - 15;

@@ -15,14 +15,22 @@
     </properties>
 
     <!--
-        Dependencies added for running of javafx related code any platforms
-    -->
+Dependencies added for running of javafx related code any platforms
+-->
     <dependencies>
         <dependency>
             <groupId>org.openjfx</groupId>
-            <artifactId>javafx-fxml</artifactId>
-            <version>17.0.1</version>
+            <artifactId>javafx-controls</artifactId>
+            <version>13</version>
         </dependency>
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-fxml</artifactId>
+            <version>13</version>
+        </dependency>
+        <!-- Add any other JavaFX dependencies your project needs -->
     </dependencies>
+
+
 
 </project>
