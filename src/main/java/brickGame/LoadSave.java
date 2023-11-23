@@ -28,7 +28,7 @@ public class LoadSave {
     public boolean isExistHeartBlock;
 
     /** Indicates whether the game is in a gold status. */
-    public boolean isGoldStauts;
+    public boolean isGoldStatus;
 
     /** Indicates the direction of the ball's vertical movement. */
     public boolean goDownBall;
@@ -138,7 +138,7 @@ public class LoadSave {
 
 
             isExistHeartBlock = inputStream.readBoolean();
-            isGoldStauts = inputStream.readBoolean();
+            isGoldStatus = inputStream.readBoolean();
             goDownBall = inputStream.readBoolean();
             goRightBall = inputStream.readBoolean();
             collideToBreak = inputStream.readBoolean();

@@ -22,60 +22,30 @@ public class GameEngine {
 
     private OnAction onAction;
     private int fps = 15;
+    private volatile boolean isStopped = true;
+
     private Thread updateThread;
     private Thread physicsThread;
-    public boolean isStopped = true;
+    private Thread timeThread;
 
-    /**
-     * Sets the {@code OnAction} listener for handling game-related events.
-     *
-     * @param onAction The implementation of the {@code OnAction} interface.
-     * <p>
-     * Example usage:
-     * <pre>
-     * {@code
-     * engine.setOnAction(onActionImplementation);
-     * }
-     * </pre>
-     * </p>
-     */
+    private long time = 0;
+
     public void setOnAction(OnAction onAction) {
         this.onAction = onAction;
     }
 
-    /**
-     * @param fps set fps and we convert it to millisecond
-     */
     public void setFps(int fps) {
-        this.fps = (int) 1000 / fps;
+        this.fps = 1000 / fps;
     }
 
-    /**
-     * Sets the frames per second (fps) for the game engine.
-     *
-     * @param fps The desired frames per second.
-     * <p>
-     * Example usage:
-     * <pre>
-     * {@code
-     * engine.setFps(60);
-     * }
-     * </pre>
-     * </p>
-     *
-     * @implNote The fps value is converted to milliseconds for internal use.
-     */
-    private synchronized void Update() {
-        updateThread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                while (!updateThread.isInterrupted()) {
-                    try {
-                        onAction.onUpdate();
-                        Thread.sleep(fps);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
+    private void Update() {
+        updateThread = new Thread(() -> {
+            while (!Thread.interrupted()) {
+                try {
+                    onAction.onUpdate();
+                    Thread.sleep(fps);
+                } catch (InterruptedException e) {
+                    Thread.currentThread().interrupt(); // Preserve interrupt status
                 }
             }
         });
@@ -86,36 +56,20 @@ public class GameEngine {
         onAction.onInit();
     }
 
-    private synchronized void PhysicsCalculation() {
-        physicsThread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                while (!physicsThread.isInterrupted()) {
-                    try {
-                        onAction.onPhysicsUpdate();
-                        Thread.sleep(fps);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
+    private void PhysicsCalculation() {
+        physicsThread = new Thread(() -> {
+            while (!Thread.interrupted()) {
+                try {
+                    onAction.onPhysicsUpdate();
+                    Thread.sleep(fps);
+                } catch (InterruptedException e) {
+                    Thread.currentThread().interrupt(); // Preserve interrupt status
                 }
             }
         });
-
         physicsThread.start();
-
     }
 
-    /**
-     * Starts the game engine, initializing the game state and initiating update and physics threads.
-     * <p>
-     * Example usage:
-     * <pre>
-     * {@code
-     * engine.start();
-     * }
-     * </pre>
-     * </p>
-     */
     public void start() {
         time = 0;
         Initialize();
@@ -125,74 +79,38 @@ public class GameEngine {
         isStopped = false;
     }
 
-    /**
-     * Stops the game engine, interrupting update, physics, and time threads.
-     * <p>
-     * Example usage:
-     * <pre>
-     * {@code
-     * engine.stop();
-     * }
-     * </pre>
-     * </p>
-     */
     public void stop() {
         if (!isStopped) {
             isStopped = true;
-            updateThread.stop();
-            physicsThread.stop();
-            timeThread.stop();
+            updateThread.interrupt();
+            physicsThread.interrupt();
+            timeThread.interrupt();
         }
     }
 
-    private long time = 0;
-
-    private Thread timeThread;
-
     private void TimeStart() {
-        timeThread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    while (true) {
-                        time++;
-                        onAction.onTime(time);
-                        Thread.sleep(1);
-                    }
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
+        timeThread = new Thread(() -> {
+            try {
+                while (!Thread.interrupted()) {
+                    time++;
+                    onAction.onTime(time);
+                    Thread.sleep(1);
                 }
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt(); // Preserve interrupt status
             }
         });
         timeThread.start();
     }
 
-
-    /**
-     * Represents the callback interface for game-related events.
-     */
     public interface OnAction {
-        /**
-         * Called during each game update to handle game logic.
-         */
         void onUpdate();
 
-        /**
-         * Called during game initialization to set up initial game state.
-         */
         void onInit();
 
-        /**
-         * Called during each physics update to handle physics calculations.
-         */
         void onPhysicsUpdate();
 
-        /**
-         * Called continuously to provide the current time elapsed since the start of the game.
-         *
-         * @param time The elapsed time in milliseconds.
-         */
         void onTime(long time);
     }
-
 }
+
