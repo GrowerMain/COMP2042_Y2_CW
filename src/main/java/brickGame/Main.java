@@ -107,6 +107,8 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
 
     private boolean loadFromSave = false;
 
+    private boolean isBallStuck = true; // New variable to track ball state
+
     Stage  primaryStage;
     Button load    = null;
     Button newGame = null;
@@ -271,7 +273,6 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
                 move(LEFT);
                 break;
             case RIGHT:
-
                 move(RIGHT);
                 break;
             case DOWN:
@@ -279,6 +280,15 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
                 break;
             case S:
                 saveGame();
+                break;
+            case SPACE:
+                if (isBallStuck) {
+                    // Release the ball if it's currently stuck
+                    isBallStuck = false;
+                    // Set initial velocity or any other behavior when releasing the ball
+                    vX = 1.000;
+                    goDownBall = true;
+                }
                 break;
         }
     }
@@ -331,6 +341,9 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
         ball = new Circle();
         ball.setRadius(ballRadius);
         ball.setFill(new ImagePattern(new Image("ball.png")));
+
+        // Set the initial ball state to stuck
+        isBallStuck = true;
     }
     /**
      * Initializes the paddle (break) with a specified width and height.
@@ -382,38 +395,89 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
     private void setPhysicsToBall() {
         //v = ((time - hitTime) / 1000.000) + 1.000;
 
-        if (goDownBall) {
-            yBall += vY;
-        } else {
-            yBall -= vY;
-        }
-
-        if (goRightBall) {
-            xBall += vX;
-        } else {
-            xBall -= vX;
-        }
-
-        if (yBall <= 0) {
-            //vX = 1.000;
-            resetCollideFlags();
-            goDownBall = true;
-            return;
-        }
-        if (yBall >= sceneHeight) {
-            goDownBall = false;
-            if (!isGoldStatus) {
-                //TODO gameover
-                heart--;
-                new Score().show(sceneWidth / 2, sceneHeight / 2, -1, this);
-
-                if (heart == 0) {
-                    new Score().showGameOver(this);
-                    engine.stop();
+        //System.out.println("level of play is:" + level);
+        if (level > 1) {
+            if (isBallStuck) {
+                // If the ball is stuck, update its position based on the paddle's position
+                xBall = centerBreakX;
+                yBall = yBreak - ballRadius;
+            } else {
+                // Ball physics when released
+                if (goDownBall) {
+                    yBall += vY;
+                } else {
+                    yBall -= vY;
                 }
 
+                if (goRightBall) {
+                    xBall += vX;
+                } else {
+                    xBall -= vX;
+                }
+
+                // Rest of the existing ball physics code goes here...
+
+                if (yBall <= 0) {
+                    // Handle collision with the top wall
+                    resetCollideFlags();
+                    goDownBall = true;
+                    return;
+                }
+
+                if (yBall >= sceneHeight) {
+                    // Handle collision with the bottom wall
+                    goDownBall = false;
+                    if (!isGoldStatus) {
+                        // TODO game over logic
+                        heart--;
+                        new Score().show(sceneWidth / 2, sceneHeight / 2, -1, this);
+
+                        if (heart == 0) {
+                            new Score().showGameOver(this);
+                            engine.stop();
+                        }
+                    }
+                }
             }
-            //return;
+
+        } else {
+            // Handle behavior for levels other than 2
+            // You can add different logic or leave it empty depending on your requirements
+
+
+            if (goDownBall) {
+                yBall += vY;
+            } else {
+                yBall -= vY;
+            }
+
+            if (goRightBall) {
+                xBall += vX;
+            } else {
+                xBall -= vX;
+            }
+
+            if (yBall <= 0) {
+                //vX = 1.000;
+                resetCollideFlags();
+                goDownBall = true;
+                return;
+            }
+            if (yBall >= sceneHeight) {
+                goDownBall = false;
+                if (!isGoldStatus) {
+                    //TODO gameover
+                    heart--;
+                    new Score().show(sceneWidth / 2, sceneHeight / 2, -1, this);
+
+                    if (heart == 0) {
+                        new Score().showGameOver(this);
+                        engine.stop();
+                    }
+
+                }
+                //return;
+            }
         }
 
         if (yBall >= yBreak - ballRadius) {
@@ -421,7 +485,6 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
             if (xBall >= xBreak && xBall <= xBreak + breakWidth) {
                 hitTime = time;
                 resetCollideFlags();
-                collideToBreak = true;
                 goDownBall = false;
 
                 double relation = (xBall - centerBreakX) / (breakWidth / 2);
@@ -467,7 +530,6 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
         }
 
         //Wall collide
-
         if (collideToRightWall) {
             goRightBall = false;
         }
@@ -493,7 +555,6 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
         if (collideToBottomBlock) {
             goDownBall = true;
         }
-
 
     }
 
@@ -589,7 +650,7 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
 
         LoadSave loadSave = new LoadSave();
         loadSave.read();
-
+        isBallStuck = false;
 
         isExistHeartBlock = loadSave.isExistHeartBlock;
         isGoldStatus = loadSave.isGoldStatus;
@@ -639,6 +700,9 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
      * Initializes the game state and components for a new level.
      */
     private void nextLevel() {
+
+        isBallStuck = true;
+
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
