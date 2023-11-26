@@ -44,6 +44,7 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
 
 
     private int level = 0;
+    private int diffLevel = 4;
 
     private double xBreak = 0.0f;
     private double centerBreakX;
@@ -226,7 +227,7 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
 
     private void initBoard() {
         for (int i = 0; i < 4; i++) {
-            for (int j = 0; j < level + 4; j++) {
+            for (int j = 0; j < level + diffLevel; j++) {
                 int r = new Random().nextInt(500);
                 if (r % 5 == 0) {
                     continue;
@@ -341,7 +342,7 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
     private void initBall() {
         Random random = new Random();
         xBall = random.nextInt(sceneWidth) + 1;
-        yBall = random.nextInt(sceneHeight - 200) + ((level + 1) * Block.getHeight()) + 15;
+        yBall = random.nextInt(sceneHeight - 200) + ((level + diffLevel) * Block.getHeight()) + 15;
         ball = new Circle();
         ball.setRadius(ballRadius);
         ball.setFill(new ImagePattern(new Image("ball.png")));
@@ -816,7 +817,7 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
         });
 
 
-        if (yBall >= Block.getPaddingTop() && yBall <= (Block.getHeight() * (level + 1)) + Block.getPaddingTop()) {
+        if (yBall >= Block.getPaddingTop() && yBall <= (Block.getHeight() * (level + diffLevel)) + Block.getPaddingTop()) {
             for (final Block block : blocks) {
                 int hitCode = block.checkHitToBlock(xBall, yBall);
                 if (hitCode != Block.NO_HIT) {
