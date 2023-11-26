@@ -226,7 +226,7 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
 
     private void initBoard() {
         for (int i = 0; i < 4; i++) {
-            for (int j = 0; j < level + 1; j++) {
+            for (int j = 0; j < level + 4; j++) {
                 int r = new Random().nextInt(500);
                 if (r % 5 == 0) {
                     continue;
@@ -276,7 +276,7 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
                 move(RIGHT);
                 break;
             case DOWN:
-                //setPhysicsToBall();
+                // setPhysicsToBall();
                 break;
             case S:
                 saveGame();
@@ -290,8 +290,12 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
                     goDownBall = true;
                 }
                 break;
+            case ESCAPE:
+                restartGame();
+                break;
         }
     }
+
 
     /**
      * Moves the paddle (break) either to the left or right based on the provided direction.
