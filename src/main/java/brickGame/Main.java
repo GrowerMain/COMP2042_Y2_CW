@@ -75,7 +75,7 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
 
     private int  heart    = 3;
     private int  score    = 0;
-    private int scoreMult = 1;
+    private int scoreMultiplier = 1;
     private long time     = 0;
     private long hitTime  = 0;
     private long goldTime = 0;
@@ -471,7 +471,7 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
             if (yBall >= sceneHeight) {
                 goDownBall = false;
                 if (!isGoldStatus) {
-                    //TODO gameover
+                    //TODO gameOver
                     heart--;
                     new Score().show(sceneWidth / 2, sceneHeight / 2, -1, this);
 
@@ -487,9 +487,9 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
 
         // If gold ball status is active, increase score by 3 times
         if (isGoldStatus) {
-            scoreMult = 3;
+            scoreMultiplier = 3;
         }else {
-            scoreMult = 1;
+            scoreMultiplier = 1;
         }
 
         if (yBall >= yBreak - ballRadius) {
@@ -789,7 +789,7 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
     /**
      * Represents the main game loop where physics and game state updates occur.
      * <p>
- *     game update events and updates the UI elements.
+     * game update events and updates the UI elements.
      * </p>
      * <p>
      * Example usage:
@@ -803,6 +803,20 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
      * </pre>
      * </p>
      */
+
+    private void updateBackground() {
+        if (score >= 20) {
+            root.setStyle("-fx-background-image: url('TCC2.png');");
+        }else if (score >= 10) {
+            root.setStyle("-fx-background-image: url('TCC3.jpg');");
+        } else {
+            root.setStyle(null); // Remove background image
+        }
+
+
+    }
+
+
     @Override
     public void onUpdate() {
         Platform.runLater(new Runnable() {
@@ -820,7 +834,11 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
                 for (Bonus choco : chocoBlock) {
                     choco.choco.setY(choco.y);
                 }
+                // Update the background based on the score
+                updateBackground();
             }
+
+
         });
 
 
@@ -828,7 +846,7 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
             for (final Block block : blocks) {
                 int hitCode = block.checkHitToBlock(xBall, yBall);
                 if (hitCode != Block.NO_HIT) {
-                    score += (scoreMult * 1);
+                    score += (scoreMultiplier * 1);
 
                     new Score().show(block.x, block.y, 1, this);
 
