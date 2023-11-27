@@ -15,7 +15,6 @@ import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
-
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Random;
@@ -76,6 +75,7 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
 
     private int  heart    = 3;
     private int  score    = 0;
+    private int scoreMult = 1;
     private long time     = 0;
     private long hitTime  = 0;
     private long goldTime = 0;
@@ -485,6 +485,13 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
             }
         }
 
+        // If gold ball status is active, increase score by 3 times
+        if (isGoldStatus) {
+            scoreMult = 3;
+        }else {
+            scoreMult = 1;
+        }
+
         if (yBall >= yBreak - ballRadius) {
             //System.out.println("collide1");
             if (xBall >= xBreak && xBall <= xBreak + breakWidth) {
@@ -821,7 +828,7 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
             for (final Block block : blocks) {
                 int hitCode = block.checkHitToBlock(xBall, yBall);
                 if (hitCode != Block.NO_HIT) {
-                    score += 1;
+                    score += (scoreMult * 1);
 
                     new Score().show(block.x, block.y, 1, this);
 
