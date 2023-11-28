@@ -18,7 +18,6 @@ import javafx.stage.Stage;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Random;
-import brickGame.Direction;
 
 /**
  * This class is the main entry point for the Block Game application.
@@ -42,39 +41,45 @@ import brickGame.Direction;
 
 public class Main extends Application implements EventHandler<KeyEvent>, GameEngine.OnAction {
 
+    // Constants
 
+    // Instance variables
+
+    // GUI components
+
+
+    // Game settings
     private int level = 0;
     private int diffLevel = 4;
 
-    private double xBreak = 0.0f;
-    private double centerBreakX;
-    private double yBreak = 640.0f;
 
+    // Paddle (break) dimensions
+    private static final int ballRadius = 10;
     private static final int PADDLE_WIDTH     = 130;
     private static final int PADDLE_HEIGHT    = 30;
     private static final int HALF_PADDLE_WIDTH = PADDLE_WIDTH / 2;
 
+    // Scene dimensions
 
     private static final int SCENE_WIDTH  = 500;
     private static final int SCENE_HEIGHT = 700;
 
-    private static int LEFT  = 1;
-    private static int RIGHT = 2;
-
+    // Ball variables
     private Circle ball;
     private double xBall;
     private double yBall;
+    private boolean isBallStuck = true;
 
-    private boolean isGoldStatus      = false;
-    private boolean isExistHeartBlock = false;
-
+    // Paddle variables
     private Rectangle rect;
-    private int       ballRadius = 10;
+    private double xBreak = 0.0f;
+    private double yBreak = 640.0f;
+    private double centerBreakX;
 
+
+    // Game state variables
     private int destroyedBlockCount = 0;
-
-    private double v = 1.000;
-
+    private double v;
     private int  heart    = 3;
     private int  score    = 0;
     private int scoreMultiplier = 1;
@@ -82,15 +87,32 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
     private long hitTime  = 0;
     private long goldTime = 0;
 
-    private Direction currentDirection = Direction.RIGHT;
+    // Ball state variables
+    private boolean goDownBall                  = true;
+    private boolean goRightBall                 = true;
+    private boolean collideToBreak               = false;
+    private boolean collideToBreakAndMoveToRight = true;
+    private boolean collideToRightWall           = false;
+    private boolean collideToLeftWall            = false;
+    private boolean collideToRightBlock          = false;
+    private boolean collideToBottomBlock         = false;
+    private boolean collideToLeftBlock           = false;
+    private boolean collideToTopBlock            = false;
 
+    // Ball velocity variables
+    private double vX = 1.000;
+    private double vY = 1.000;
+
+
+    // Game engine and save path
     private GameEngine engine;
     public static String savePath    = "C:/save/save.mdds";
     public static String savePathDir = "C:/save/";
 
+    // Block and color arrays
     private ArrayList<Block> blocks = new ArrayList<Block>();
     private ArrayList<Bonus> chocoBlock = new ArrayList<Bonus>();
-    private Color[]          colors = new Color[]{
+    private Color[] colors = new Color[]{
             Color.MAGENTA,
             Color.RED,
             Color.GOLD,
@@ -105,18 +127,28 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
             Color.TOMATO,
             Color.TAN,
     };
-    public  Pane             root;
-    private Label            scoreLabel;
-    private Label            heartLabel;
-    private Label            levelLabel;
 
+    // GUI components
+    private Pane root;
+    private Label scoreLabel;
+    private Label heartLabel;
+    private Label levelLabel;
+
+    // Flags
     private boolean loadFromSave = false;
 
-    private boolean isBallStuck = true; // New variable to track ball state
-
-    Stage  primaryStage;
+    // Buttons
+    private Stage primaryStage;
     Button load    = null;
     Button newGame = null;
+    /**=============================================================================================================
+====================================================================================================================
+====================================================================================================================
+====================================================================================================================
+====================================================================================================================*/
+
+    private boolean isGoldStatus      = false;
+    private boolean isExistHeartBlock = false;
 
     /**
      * The main entry point for the application.
@@ -132,9 +164,31 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
      * </pre>
      * </p>
      *
-     * @param primaryStage The primary stage for this application.
-     * @throws Exception If an error occurs during application startup.
+     * @param args Command line arguments (not used).
      */
+    public static void main(String[] args) {
+        launch(args);
+    }
+
+
+    /**
+     * Represents the main game loop where physics and game state updates occur.
+     * <p>
+     * game update events and updates the UI elements.
+     * </p>
+     * <p>
+     * Example usage:
+     * <pre>
+     * {@code
+     * engine = new GameEngine();
+     * engine.setOnAction(this);
+     * engine.setFps(120);
+     * engine.start();
+     * }
+     * </pre>
+     * </p>
+     */
+    // Start method for initializing the game
     @Override
     public void start(Stage primaryStage) throws Exception {
         this.primaryStage = primaryStage;
@@ -229,6 +283,59 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
 
     }
 
+
+
+    /**
+     * Initialize the ball for the game.
+     * <p>
+     * This method is responsible for setting up and initializing the game ball.
+     * It includes the creation of the ball object, setting its initial position,
+     * and configuring any other properties necessary for its functioning within the game.
+     * </p>
+     */
+    // GUI initialization methods
+    private void initBall() {
+        Random random = new Random();
+        xBall = random.nextInt(SCENE_WIDTH ) + 1;
+        yBall = random.nextInt(SCENE_HEIGHT - 200) + ((level + diffLevel) * Block.getHeight()) + 15;
+        ball = new Circle();
+        ball.setRadius(ballRadius);
+        ball.setFill(new ImagePattern(new Image("ball.png")));
+
+        // Set the initial ball state to stuck
+        isBallStuck = true;
+    }
+
+
+    /**
+     * Initialize the paddle (break) for the game.
+     * <p>
+     * This method is responsible for setting up and initializing the game paddle (break).
+     * It includes the creation of the paddle object, setting its initial position,
+     * and configuring any other properties necessary for its functioning within the game.
+     * </p>
+     */
+    private void initBreak() {
+        rect = new Rectangle();
+        rect.setWidth(PADDLE_WIDTH);
+        rect.setHeight(PADDLE_HEIGHT);
+        rect.setX(xBreak);
+        rect.setY(yBreak);
+
+        ImagePattern pattern = new ImagePattern(new Image("block.jpg"));
+
+        rect.setFill(pattern);
+    }
+
+
+    /**
+     * Initialize the game board.
+     * <p>
+     * This method is responsible for setting up and initializing the game board.
+     * It involves the creation of blocks, determining their positions, and configuring
+     * any other properties necessary for the board's functioning within the game.
+     * </p>
+     */
     private void initBoard() {
         for (int i = 0; i < 4; i++) {
             for (int j = 0; j < level + diffLevel; j++) {
@@ -255,15 +362,6 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
                 //System.out.println("colors " + r % (colors.length));
             }
         }
-    }
-
-    /**
-     * The main entry point for the application.
-     *
-     * @param args Command line arguments (not used).
-     */
-    public static void main(String[] args) {
-        launch(args);
     }
 
     /**
@@ -344,65 +442,12 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
 
 
     /**
-     * Initializes the ball's starting position with random coordinates.
-     */
-    private void initBall() {
-        Random random = new Random();
-        xBall = random.nextInt(SCENE_WIDTH ) + 1;
-        yBall = random.nextInt(SCENE_HEIGHT - 200) + ((level + diffLevel) * Block.getHeight()) + 15;
-        ball = new Circle();
-        ball.setRadius(ballRadius);
-        ball.setFill(new ImagePattern(new Image("ball.png")));
-
-        // Set the initial ball state to stuck
-        isBallStuck = true;
-    }
-    /**
-     * Initializes the paddle (break) with a specified width and height.
-     */
-    private void initBreak() {
-        rect = new Rectangle();
-        rect.setWidth(PADDLE_WIDTH);
-        rect.setHeight(PADDLE_HEIGHT);
-        rect.setX(xBreak);
-        rect.setY(yBreak);
-
-        ImagePattern pattern = new ImagePattern(new Image("block.jpg"));
-
-        rect.setFill(pattern);
-    }
-
-
-    private boolean goDownBall                  = true;
-    private boolean goRightBall                 = true;
-    private boolean collideToBreak               = false;
-    private boolean collideToBreakAndMoveToRight = true;
-    private boolean collideToRightWall           = false;
-    private boolean collideToLeftWall            = false;
-    private boolean collideToRightBlock          = false;
-    private boolean collideToBottomBlock         = false;
-    private boolean collideToLeftBlock           = false;
-    private boolean collideToTopBlock            = false;
-
-    private double vX = 1.000;
-    private double vY = 1.000;
-
-
-    private void resetCollideFlags() {
-
-        collideToBreak = false;
-        collideToBreakAndMoveToRight = false;
-        collideToRightWall = false;
-        collideToLeftWall = false;
-
-        collideToRightBlock = false;
-        collideToBottomBlock = false;
-        collideToLeftBlock = false;
-        collideToTopBlock = false;
-    }
-
-    /**
-     * Sets the physics for the ball's movement, including collisions with the paddle and blocks.
+     * Apply physics to the ball's movement, including collisions with the paddle and blocks.
+     * <p>
+     * This method is responsible for updating the ball's position based on its current state and
+     * handling collisions with the paddle, walls, and blocks. It incorporates the physics
+     * logic for the ball's movement within the game.
+     * </p>
      */
     private void setPhysicsToBall() {
         //v = ((time - hitTime) / 1000.000) + 1.000;
@@ -579,7 +624,12 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
 
 
     /**
-     * Checks the count of destroyed blocks and triggers actions accordingly.
+     * Check the count of destroyed blocks and trigger actions accordingly.
+     * <p>
+     * This method examines the count of destroyed blocks and initiates specific actions
+     * based on the game's logic. It plays a role in determining whether the player has
+     * successfully cleared a level or achieved certain conditions in the game.
+     * </p>
      */
     private void checkDestroyedCount() {
         if (destroyedBlockCount == blocks.size()) {
@@ -590,8 +640,58 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
         }
     }
 
+
     /**
-     * Saves the current game state to a file.
+     * Advance to the next level of the game.
+     * <p>
+     * This method handles the transition to the next level of the game. It includes
+     * the necessary logic for resetting certain game parameters, updating the UI,
+     * and initializing the game state for the new level.
+     * </p>
+     */
+    private void nextLevel() {
+
+        isBallStuck = true;
+
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    vX = 1.000;
+
+                    engine.stop();
+                    resetCollideFlags();
+                    goDownBall = true;
+
+                    isGoldStatus = false;
+                    isExistHeartBlock = false;
+
+
+                    hitTime = 0;
+                    time = 0;
+                    goldTime = 0;
+
+                    engine.stop();
+                    blocks.clear();
+                    chocoBlock.clear();
+                    destroyedBlockCount = 0;
+                    start(primaryStage);
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
+
+
+    /**
+     * Save the current game state to a file.
+     * <p>
+     * This method is responsible for saving the current state of the game to a file.
+     * It includes logic for persisting essential game parameters such as the level,
+     * score, and player's progress.
+     * </p>
      */
     private void saveGame() {
         new Thread(new Runnable() {
@@ -662,8 +762,13 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
 
     }
 
+
     /**
-     * Loads the game state from a saved file.
+     * Load the game state from a saved file.
+     * <p>
+     * This method handles loading the saved game state from a file. It includes
+     * logic to restore the level, score, and other relevant game parameters.
+     * </p>
      */
     private void loadGame() {
 
@@ -715,43 +820,29 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
 
     }
 
+
+
+
     /**
-     * Initializes the game state and components for a new level.
+     * Reset collision flags.
+     * <p>
+     * This method resets the flags used to track collisions in the game. It is called
+     * to clear collision-related state before re-evaluating collisions in the game loop.
+     * </p>
      */
-    private void nextLevel() {
+    private void resetCollideFlags() {
 
-        isBallStuck = true;
+        collideToBreak = false;
+        collideToBreakAndMoveToRight = false;
+        collideToRightWall = false;
+        collideToLeftWall = false;
 
-        Platform.runLater(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    vX = 1.000;
-
-                    engine.stop();
-                    resetCollideFlags();
-                    goDownBall = true;
-
-                    isGoldStatus = false;
-                    isExistHeartBlock = false;
-
-
-                    hitTime = 0;
-                    time = 0;
-                    goldTime = 0;
-
-                    engine.stop();
-                    blocks.clear();
-                    chocoBlock.clear();
-                    destroyedBlockCount = 0;
-                    start(primaryStage);
-
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        });
+        collideToRightBlock = false;
+        collideToBottomBlock = false;
+        collideToLeftBlock = false;
+        collideToTopBlock = false;
     }
+
 
     /**
      * Restarts the game with initial settings.
@@ -790,27 +881,15 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
         }
     }
 
-    /**
-     * Handles game update events and updates the UI elements.
-     */
-    /**
-     * Represents the main game loop where physics and game state updates occur.
-     * <p>
-     * game update events and updates the UI elements.
-     * </p>
-     * <p>
-     * Example usage:
-     * <pre>
-     * {@code
-     * engine = new GameEngine();
-     * engine.setOnAction(this);
-     * engine.setFps(120);
-     * engine.start();
-     * }
-     * </pre>
-     * </p>
-     */
 
+    /**
+     * Update the background based on the current game state.
+     * <p>
+     * This method is responsible for updating the background of the game based on
+     * the current game state. It may change the background image or color to reflect
+     * different levels or events in the game.
+     * </p>
+     */
     private void updateBackground() {
         if (score >= 20) {
             root.setStyle("-fx-background-image: url('TCC2.png');");
@@ -819,11 +898,15 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
         } else {
             root.setStyle(null); // Remove background image
         }
-
-
     }
 
 
+    /**
+     * Update and render the game based on the current state.
+     * <p>
+     * Update UI elements based on game state.
+     * </p>
+     */
     @Override
     public void onUpdate() {
         Platform.runLater(new Runnable() {
@@ -905,16 +988,28 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
         }
     }
 
+
     /**
-     * Initializes actions when the game is first started.
+     * Initialization logic for the game engine.
+     * <p>
+     * This method contains initialization logic specific to the game engine. It is
+     * called during the initialization phase of the game and may include setting
+     * up the game loop, configuring the frame rate, or other engine-related tasks.
+     * </p>
      */
     @Override
     public void onInit() {
 
     }
 
+
     /**
-     * Handles physics-related updates during the game.
+     * Handle physics-related updates during the game.
+     * <p>
+     * This method is called during the game loop to handle physics-related updates.
+     * It may include calculations for the movement, collisions, or other physical
+     * interactions in the game world.
+     * </p>
      */
     @Override
     public void onPhysicsUpdate() {
@@ -946,8 +1041,10 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
 
     }
 
+
+
     /**
-     * Handles the passage of time during the game.
+     * Handle the passage of time during the game.
      *
      * @param time The current time in milliseconds.
      */
@@ -955,4 +1052,5 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
     public void onTime(long time) {
         this.time = time;
     }
+
 }
