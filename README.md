@@ -193,3 +193,74 @@ Ongoing efforts are being made to address the issues mentioned above. Developers
 
 ## Conclusion
 While these envisioned features could have added intriguing dimensions to the Block Game, practical considerations, development complexity, and the goal of delivering a stable and enjoyable user experience led to their exclusion from the current implementation.
+
+# Modified Java Classes
+
+## 1. **Main.java**
+### Changes Made:
+- **Added New Variable:**
+    - Introduced a new boolean variable `isBallStuck` to track the ball's state, indicating whether it is stuck to the paddle or in motion.
+
+- **Modified Ball Initialization:**
+    - Modified the `initBall()` method to set the initial state of the ball as stuck to the paddle.
+
+- **Enhanced Ball Physics:**
+    - Extended the `setPhysicsToBall()` method to handle the case when the ball is stuck. Upon releasing, the ball's velocity and direction are adjusted based on the paddle's position.
+
+- **Adjusted Paddle Movement:**
+    - Modified the `move(int direction)` method to prevent paddle movement while the ball is stuck.
+
+### Reasons for Modifications:
+- **Ball Sticking Mechanism:**
+    - The introduction of the `isBallStuck` variable and corresponding modifications in `initBall()` and `setPhysicsToBall()` were necessary to implement a controlled release of the ball from the paddle.
+
+- **Enhanced Gameplay Dynamics:**
+    - These changes aim to improve gameplay dynamics by providing more control to the player over the initial trajectory of the ball.
+
+- **Paddle-Ball Interaction:**
+    - Adjustments to the paddle movement prevent unintended interactions while the ball is in a stuck state, avoiding disruptions to the gaming experience.
+
+## 2. **GameEngine.java**
+### Changes Made:
+- **Adjusted Physics Update Call:**
+    - Extended the `onPhysicsUpdate()` method to include a call to `setPhysicsToBall()` from the `Main` class.
+
+### Reasons for Modifications:
+- **Integration with Main Class:**
+    - The adjustment was made to ensure that ball physics updates, especially the `setPhysicsToBall()` method, are consistently applied during the physics update cycle in the game engine.
+
+## Conclusion:
+These modifications in the `Main` and `GameEngine` classes were essential for implementing a controlled ball release mechanism and ensuring smooth integration of ball physics within the game engine's update cycle.
+
+# Unexpected Problems
+
+## 1. **Issue: Ball Sticking to Paddle**
+### Description:
+- **Problem:**
+    - The initial attempt to code the ball to stick to the paddle upon contact failed. The ball would freeze on the screen instead of adhering to the paddle.
+
+- **Challenge:**
+    - Difficulty in accurately calculating the direction and velocity of the ball when it contacts the paddle, leading to unexpected behavior.
+
+- **Resolution Attempted:**
+    - Various adjustments were made in the `setPhysicsToBall()` method to correctly handle the ball's behavior upon hitting the paddle.
+
+- **Outcome:**
+    - While some improvements were achieved, a comprehensive solution to ensure the ball consistently sticks to the paddle proved challenging. The issue remains partially addressed.
+
+## 2. **Unexpected Rendering Glitches**
+### Description:
+- **Problem:**
+    - Rendering glitches were observed during certain ball-paddle interactions, causing brief visual disruptions.
+
+- **Challenge:**
+    - Identifying the specific conditions triggering the rendering glitches and understanding the root cause.
+
+- **Resolution Attempted:**
+    - Debugging sessions were conducted to trace the sequence of events leading to rendering glitches. Adjustments in rendering calls and order were made to minimize the issue.
+
+- **Outcome:**
+    - While the frequency of rendering glitches was reduced, completely eliminating the issue required further investigation.
+
+## Conclusion:
+Unexpected challenges in achieving precise ball-paddle interactions and occasional rendering glitches posed difficulties during the assignment. Despite attempts to address these issues, complete resolution proved elusive, highlighting the complexity of fine-tuning game mechanics and graphics rendering.
