@@ -5,6 +5,9 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
+import javafx.stage.Stage;
 
 /**
  * The {@code Score} class provides methods to display score-related messages in the game.
@@ -42,59 +45,90 @@ public class Score {
      * </pre>
      * </p>
      */
-    public void show(final double x, final double y, int score, final Main main) {
-        // Implementation...
+    public void show(final double x, final double y, int score, final Stage main) {
+
     }
 
     /**
-     * Displays a message at a predefined position.
+     * Displays a pop-up message.
      *
      * @param message The message to be displayed.
-     * @param main    The main game instance.
+     * @param primaryStage The primary stage of the application.
      * <p>
      * Example usage:
      * <pre>
      * {@code
-     * score.showMessage("Game Over", main);
+     * new Score().showMessage("Game Saved", main.primaryStage());
      * }
      * </pre>
      * </p>
      */
-    public void showMessage(String message, final Main main) {
-        // Implementation...
+    public void showMessage(String message, Stage primaryStage) {
+        Platform.runLater(() -> {
+            Alert alert = new Alert(AlertType.INFORMATION);
+            alert.setTitle("Message");
+            alert.setHeaderText(null);
+            alert.setContentText(message);
+
+            // Set the owner of the alert to the primary stage
+            alert.initOwner(primaryStage);
+
+            // Show and wait for the user to close the dialog
+            alert.showAndWait();
+        });
     }
 
     /**
      * Displays the game over message and a restart button.
      *
-     * @param main The main game instance.
+     * @param primaryStage The primary stage of the application.
      * <p>
      * Example usage:
      * <pre>
      * {@code
-     * score.showGameOver(main);
+     * score.showGameOver(primaryStage);
      * }
      * </pre>
      * </p>
      */
-    public void showGameOver(final Main main) {
-        // Implementation...
+    public void showGameOver(final Stage primaryStage, int score) {
+        Platform.runLater(() -> {
+            Alert alert = new Alert(AlertType.INFORMATION);
+            alert.setTitle("Game Over");
+            alert.setHeaderText(null);
+            alert.setContentText("Game Over! Your final score is: " + score);
+
+            // Ensure the alert is displayed on top of the main stage
+            alert.initOwner(primaryStage);
+
+            alert.showAndWait();
+        });
     }
 
     /**
-     * Displays the victory message.
+     * Displays the win message when the player reaches level 5.
      *
-     * @param main The main game instance.
+     * @param primaryStage The primary stage of the application.
      * <p>
      * Example usage:
      * <pre>
      * {@code
-     * score.showWin(main);
+     * score.showWin(primaryStage);
      * }
      * </pre>
      * </p>
      */
-    public void showWin(final Main main) {
-        // Implementation...
+    public void showWin(final Stage primaryStage) {
+        Platform.runLater(() -> {
+            Alert alert = new Alert(AlertType.INFORMATION);
+            alert.setTitle("Congratulations!");
+            alert.setHeaderText(null);
+            alert.setContentText("You have won the game! Congratulations!");
+
+            // Ensure the alert is displayed on top of the main stage
+            alert.initOwner(primaryStage);
+
+            alert.showAndWait();
+        });
     }
 }

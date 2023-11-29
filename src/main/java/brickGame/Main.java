@@ -138,11 +138,6 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
     private int destroyedBlockCount = 0;
 
     /**
-     * The velocity of the ball.
-     */
-    private double v;
-
-    /**
      * The number of remaining heart lives.
      */
     private int heart = 3;
@@ -230,11 +225,6 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
      */
     private double vX = 1.000;
 
-    /**
-     * The velocity of the ball in the y-direction.
-     */
-    private double vY = 1.000;
-
 
     // Game engine and save path
     /**
@@ -265,7 +255,7 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
     /**
      * The array of colors used for blocks in the game.
      */
-    private Color[] colors = new Color[]{
+    private final Color[] colors = new Color[]{
             Color.MAGENTA,
             Color.RED,
             Color.GOLD,
@@ -312,7 +302,7 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
     /**
      * The primary stage of the JavaFX application.
      */
-    private Stage primaryStage;
+    public Stage primaryStage;
 
     /**
      * The "Load Game" button in the GUI.
@@ -333,6 +323,7 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
      * Indicates whether a heart block exists in the game.
      */
     private boolean isExistHeartBlock = false;
+
 
     /**
      * The main entry point for the application.
@@ -381,10 +372,10 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
         if (!loadFromSave) {
             level++;
             if (level >1){
-                new Score().showMessage("Level Up :)", this);
+                new Score().showMessage("Level Up :)", this.primaryStage);
             }
-            if (level == 18) {
-                new Score().showWin(this);
+            if (level == 11) {
+                new Score().showWin(this.primaryStage);
                 return;
             }
 
@@ -637,6 +628,9 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
         //v = ((time - hitTime) / 1000.000) + 1.000;
 
         //System.out.println("level of play is:" + level);
+        //The velocity of the ball in the y-direction.
+
+        double vY = 1.000;
         if (level > 1) {
             if (isBallStuck) {
                 // If the ball is stuck, update its position based on the paddle's position
@@ -671,10 +665,10 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
                     if (!isGoldStatus) {
                         // TODO game over logic
                         heart--;
-                        new Score().show(SCENE_WIDTH  / 2, SCENE_HEIGHT / 2, -1, this);
+                        new Score().show((double) SCENE_WIDTH / 2, (double) SCENE_HEIGHT / 2, -1, this.primaryStage);
 
                         if (heart == 0) {
-                            new Score().showGameOver(this);
+                            new Score().showGameOver(primaryStage, score);
                             engine.stop();
                         }
                     }
@@ -709,10 +703,10 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
                 if (!isGoldStatus) {
                     //TODO gameOver
                     heart--;
-                    new Score().show(SCENE_WIDTH  / 2, SCENE_HEIGHT / 2, -1, this);
+                    new Score().show((double) SCENE_WIDTH / 2, (double) SCENE_HEIGHT / 2, -1, this.primaryStage);
 
                     if (heart == 0) {
-                        new Score().showGameOver(this);
+                        new Score().showGameOver(this.primaryStage, score);
                         engine.stop();
                     }
 
@@ -735,7 +729,7 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
                 resetCollideFlags();
                 goDownBall = false;
 
-                double relation = (xBall - centerBreakX) / (PADDLE_WIDTH / 2);
+                double relation = (xBall - centerBreakX) / ((double) PADDLE_WIDTH / 2);
 
                 if (Math.abs(relation) <= 0.3) {
                     //vX = 0;
@@ -926,7 +920,7 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
 
                     outputStream.writeObject(blockSerializables);
 
-                    new Score().showMessage("Game Saved", Main.this);
+                    new Score().showMessage("Game Saved", primaryStage);
 
 
                 } catch (FileNotFoundException e) {
@@ -1122,7 +1116,7 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
                 if (hitCode != Block.NO_HIT) {
                     score += (scoreMultiplier * 1);
 
-                    new Score().show(block.xCoordinate, block.yCoordinate, 1, this);
+                    new Score().show(block.xCoordinate, block.yCoordinate, 1, this.primaryStage);
 
                     block.rect.setVisible(false);
                     block.isDestroyed = true;
@@ -1216,7 +1210,7 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
                 choco.taken = true;
                 choco.choco.setVisible(false);
                 score += 3;
-                new Score().show(choco.x, choco.y, 3, this);
+                new Score().show(choco.x, choco.y, 3, this.primaryStage);
             }
             choco.y += ((time - choco.timeCreated) / 1000.000) + 1.000;
         }
