@@ -69,8 +69,6 @@ Before you compile and run the application, make sure you have the following ins
 
 - If you encounter any issues or errors, please check the console output for error messages and ensure that all dependencies are correctly set up.
 
-Feel free to customize this README according to the specifics of your application and development environment.
-
 # Implemented Features
 
 The following features have been successfully implemented and are functioning as expected in the Block Game application:
@@ -229,8 +227,26 @@ While these envisioned features could have added intriguing dimensions to the Bl
 - **Integration with Main Class:**
     - The adjustment was made to ensure that ball physics updates, especially the `setPhysicsToBall()` method, are consistently applied during the physics update cycle in the game engine.
 
+## 3. **Score.java**
+### Changes Made:
+- **Added Pop-Up Message Function:**
+    - Implemented a function `showMessage(String message, final Main main)` to display pop-up messages.
+
+- **Added Game Over Display:**
+    - Implemented a function `showGameOver(final Stage primaryStage)` to display a game over message with a restart button.
+
+- **Added Win Display:**
+    - Implemented a function `showWin(final Stage main)` to display a win message upon reaching a specific level.
+
+### Reasons for Modifications:
+- **Enhanced User Interaction:**
+    - The added functions provide better user interaction by displaying informative messages during key events in the game.
+
+- **Improved End-Game Experience:**
+    - The `showGameOver` and `showWin` functions enhance the end-game experience by presenting clear messages to the player.
+
 ## Conclusion:
-These modifications in the `Main` and `GameEngine` classes were essential for implementing a controlled ball release mechanism and ensuring smooth integration of ball physics within the game engine's update cycle.
+These modifications in the `Main`, `GameEngine`, and `Score` classes contribute to a more engaging and informative user experience in the Block Game application.
 
 # Unexpected Problems
 
