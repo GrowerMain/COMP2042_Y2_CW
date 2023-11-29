@@ -41,26 +41,26 @@ public class Block implements Serializable {
      */
     public boolean isDestroyed = false;
 
-    private Color color;
+    private Color blockColor;
 
     /**
      * The type of the block.
      */
-    public int type;
+    public int blockType;
 
     /**
      * The x-coordinate of the block.
      */
-    public int x;
+    public int xCoordinate;
 
     /**
      * The y-coordinate of the block.
      */
-    public int y;
+    public int yCoordinate;
 
-    private int width = 100;
-    private int height = 30;
-    private int paddingTop = height * 2;
+    private int blockWidth = 100;
+    private int blockHeight = 30;
+    private int paddingTop = blockHeight * 2;
     private int paddingH = 50;
     public Rectangle rect;
 
@@ -128,36 +128,59 @@ public class Block implements Serializable {
     public Block(int row, int column, Color color, int type) {
         this.row = row;
         this.column = column;
-        this.color = color;
-        this.type = type;
+        this.blockColor = color;
+        this.blockType = type;
 
         draw();
     }
 
+
+    /**
+     * Draws the graphical representation of the block based on its properties.
+     * This method initializes the block's rectangle shape, sets its dimensions and position,
+     * and fills it with the appropriate color or image pattern based on the block's type.
+     * <p>
+     * The drawing process considers the block's type, such as normal, choco, heart, or star,
+     * and assigns the appropriate color or image pattern to the block's rectangle.
+     * </p>
+     * <p>
+     * This method should be called after initializing the block's properties (row, column, color, type)
+     * to visually represent the block in the brick game.
+     * </p>
+     * <p>
+     * Example usage:
+     * <pre>
+     * {@code
+     * Block block = new Block(row, column, color, type);
+     * block.drawBlock();
+     * }
+     * </pre>
+     * </p>
+     */
     private void draw() {
-        x = (column * width) + paddingH;
-        y = (row * height) + paddingTop;
+        xCoordinate = (column * blockWidth) + paddingH;
+        yCoordinate = (row * blockHeight) + paddingTop;
 
         rect = new Rectangle();
-        rect.setWidth(width);
-        rect.setHeight(height);
-        rect.setX(x);
-        rect.setY(y);
+        rect.setWidth(blockWidth);
+        rect.setHeight(blockHeight);
+        rect.setX(xCoordinate);
+        rect.setY(yCoordinate);
 
-        if (type == BLOCK_CHOCO) {
+        if (blockType == BLOCK_CHOCO) {
             Image image = new Image("choco.jpg");
             ImagePattern pattern = new ImagePattern(image);
             rect.setFill(pattern);
-        } else if (type == BLOCK_HEART) {
+        } else if (blockType == BLOCK_HEART) {
             Image image = new Image("heart.jpg");
             ImagePattern pattern = new ImagePattern(image);
             rect.setFill(pattern);
-        } else if (type == BLOCK_STAR) {
+        } else if (blockType == BLOCK_STAR) {
             Image image = new Image("star.jpg");
             ImagePattern pattern = new ImagePattern(image);
             rect.setFill(pattern);
         } else {
-            rect.setFill(color);
+            rect.setFill(blockColor);
         }
     }
 
@@ -182,19 +205,19 @@ public class Block implements Serializable {
             return NO_HIT;
         }
 
-        if (xBall >= x && xBall <= x + width && yBall == y + height) {
+        if (xBall >= xCoordinate && xBall <= xCoordinate + blockWidth && yBall == yCoordinate + blockHeight) {
             return HIT_BOTTOM;
         }
 
-        if (xBall >= x && xBall <= x + width && yBall == y) {
+        if (xBall >= xCoordinate && xBall <= xCoordinate + blockWidth && yBall == yCoordinate) {
             return HIT_TOP;
         }
 
-        if (yBall >= y && yBall <= y + height && xBall == x + width) {
+        if (yBall >= yCoordinate && yBall <= yCoordinate + blockHeight && xBall == xCoordinate + blockWidth) {
             return HIT_RIGHT;
         }
 
-        if (yBall >= y && yBall <= y + height && xBall == x) {
+        if (yBall >= yCoordinate && yBall <= yCoordinate + blockHeight && xBall == xCoordinate) {
             return HIT_LEFT;
         }
 
@@ -249,7 +272,7 @@ public class Block implements Serializable {
      * </p>
      */
     public static int getHeight() {
-        return block.height;
+        return block.blockHeight;
     }
 
     /**
@@ -266,6 +289,6 @@ public class Block implements Serializable {
      * </p>
      */
     public static int getWidth() {
-        return block.width;
+        return block.blockWidth;
     }
 }

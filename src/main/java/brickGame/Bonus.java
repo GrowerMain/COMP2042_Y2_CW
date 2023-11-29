@@ -50,6 +50,21 @@ public class Bonus implements Serializable {
         draw();
     }
 
+    /**
+     * Draws the choco bonus object on the game screen.
+     * The method initializes and configures a Rectangle representing the choco bonus,
+     * sets its width, height, position (x, y), and fills it with an image pattern.
+     * The image used for the pattern is randomly chosen between "bonus1.png" and "bonus2.png"
+     * based on a random number generator.
+     * <p>
+     * Example usage:
+     * <pre>
+     * {@code
+     * draw();
+     * }
+     * </pre>
+     * </p>
+     */
     private void draw() {
         choco = new Rectangle();
         choco.setWidth(30);

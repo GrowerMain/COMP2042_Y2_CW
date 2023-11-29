@@ -41,77 +41,230 @@ import java.util.Random;
 
 public class Main extends Application implements EventHandler<KeyEvent>, GameEngine.OnAction {
 
-    // Constants
-
-    // Instance variables
-
-    // GUI components
 
 
     // Game settings
+    /**
+     * The current level of the game.
+     */
     private int level = 0;
+
+    /**
+     * The difficulty level of the game.
+     */
     private int diffLevel = 4;
 
 
     // Paddle (break) dimensions
+    /**
+     * The radius of the ball in the game.
+     */
     private static final int ballRadius = 10;
-    private static final int PADDLE_WIDTH     = 130;
-    private static final int PADDLE_HEIGHT    = 30;
+
+    /**
+     * The width of the paddle (break) in the game.
+     */
+    private static final int PADDLE_WIDTH = 130;
+
+    /**
+     * The height of the paddle (break) in the game.
+     */
+    private static final int PADDLE_HEIGHT = 30;
+
+    /**
+     * Half of the width of the paddle (break) in the game.
+     */
     private static final int HALF_PADDLE_WIDTH = PADDLE_WIDTH / 2;
 
     // Scene dimensions
 
-    private static final int SCENE_WIDTH  = 500;
+    /**
+     * The width of the game scene.
+     */
+    private static final int SCENE_WIDTH = 500;
+
+    /**
+     * The height of the game scene.
+     */
     private static final int SCENE_HEIGHT = 700;
 
     // Ball variables
+    /**
+     * The ball object in the game.
+     */
     private Circle ball;
+
+    /**
+     * The x-coordinate of the ball.
+     */
     private double xBall;
+
+    /**
+     * The y-coordinate of the ball.
+     */
     private double yBall;
+
+    /**
+     * Indicates whether the ball is stuck.
+     */
     private boolean isBallStuck = true;
 
     // Paddle variables
+    /**
+     * The rectangle representing the paddle (break) in the game.
+     */
     private Rectangle rect;
+
+    /**
+     * The x-coordinate of the paddle (break).
+     */
     private double xBreak = 0.0f;
+
+    /**
+     * The y-coordinate of the paddle (break).
+     */
     private double yBreak = 640.0f;
+
+    /**
+     * The center x-coordinate of the paddle (break).
+     */
     private double centerBreakX;
 
 
     // Game state variables
+    /**
+     * The count of destroyed blocks in the game.
+     */
     private int destroyedBlockCount = 0;
+
+    /**
+     * The velocity of the ball.
+     */
     private double v;
-    private int  heart    = 3;
-    private int  score    = 0;
+
+    /**
+     * The number of remaining heart lives.
+     */
+    private int heart = 3;
+
+    /**
+     * The score in the game.
+     */
+    private int score = 0;
+
+    /**
+     * The multiplier for the score.
+     */
     private int scoreMultiplier = 1;
-    private long time     = 0;
-    private long hitTime  = 0;
+
+    /**
+     * The current time in the game.
+     */
+    private long time = 0;
+
+    /**
+     * The time when the ball hits an object.
+     */
+    private long hitTime = 0;
+
+    /**
+     * The time when the gold status is active.
+     */
     private long goldTime = 0;
 
     // Ball state variables
-    private boolean goDownBall                  = true;
-    private boolean goRightBall                 = true;
-    private boolean collideToBreak               = false;
+    /**
+     * Indicates the direction of the ball (downward).
+     */
+    private boolean goDownBall = true;
+
+    /**
+     * Indicates the direction of the ball (rightward).
+     */
+    private boolean goRightBall = true;
+
+    /**
+     * Indicates collision with the paddle (break).
+     */
+    private boolean collideToBreak = false;
+
+    /**
+     * Indicates collision with the paddle (break) and moving to the right.
+     */
     private boolean collideToBreakAndMoveToRight = true;
-    private boolean collideToRightWall           = false;
-    private boolean collideToLeftWall            = false;
-    private boolean collideToRightBlock          = false;
-    private boolean collideToBottomBlock         = false;
-    private boolean collideToLeftBlock           = false;
-    private boolean collideToTopBlock            = false;
+
+    /**
+     * Indicates collision with the right wall.
+     */
+    private boolean collideToRightWall = false;
+
+    /**
+     * Indicates collision with the left wall.
+     */
+    private boolean collideToLeftWall = false;
+
+    /**
+     * Indicates collision with a block on the right.
+     */
+    private boolean collideToRightBlock = false;
+
+    /**
+     * Indicates collision with a block at the bottom.
+     */
+    private boolean collideToBottomBlock = false;
+
+    /**
+     * Indicates collision with a block on the left.
+     */
+    private boolean collideToLeftBlock = false;
+
+    /**
+     * Indicates collision with a block at the top.
+     */
+    private boolean collideToTopBlock = false;
 
     // Ball velocity variables
+
+    /**
+     * The velocity of the ball in the x-direction.
+     */
     private double vX = 1.000;
+
+    /**
+     * The velocity of the ball in the y-direction.
+     */
     private double vY = 1.000;
 
 
     // Game engine and save path
+    /**
+     * The game engine for managing game logic.
+     */
     private GameEngine engine;
-    public static String savePath    = "C:/save/save.mdds";
+
+    /**
+     * The path to save the game data.
+     */
+    public static String savePath = "C:/save/save.mdds";
+
+    /**
+     * The directory path to save the game data.
+     */
     public static String savePathDir = "C:/save/";
 
-    // Block and color arrays
+    /**
+     * The list of blocks in the game.
+     */
     private ArrayList<Block> blocks = new ArrayList<Block>();
+
+    /**
+     * The list of bonus (choco) blocks in the game.
+     */
     private ArrayList<Bonus> chocoBlock = new ArrayList<Bonus>();
+
+    /**
+     * The array of colors used for blocks in the game.
+     */
     private Color[] colors = new Color[]{
             Color.MAGENTA,
             Color.RED,
@@ -129,25 +282,56 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
     };
 
     // GUI components
+    /**
+     * The root pane of the GUI.
+     */
     private Pane root;
+
+    /**
+     * The label displaying the score in the GUI.
+     */
     private Label scoreLabel;
+
+    /**
+     * The label displaying the remaining heart lives in the GUI.
+     */
     private Label heartLabel;
+
+    /**
+     * The label displaying the current level in the GUI.
+     */
     private Label levelLabel;
 
     // Flags
+    /**
+     * Indicates whether to load the game state from a save.
+     */
     private boolean loadFromSave = false;
 
     // Buttons
+    /**
+     * The primary stage of the JavaFX application.
+     */
     private Stage primaryStage;
-    Button load    = null;
-    Button newGame = null;
-    /**=============================================================================================================
-====================================================================================================================
-====================================================================================================================
-====================================================================================================================
-====================================================================================================================*/
 
-    private boolean isGoldStatus      = false;
+    /**
+     * The "Load Game" button in the GUI.
+     */
+    Button load = null;
+
+    /**
+     * The "New Game" button in the GUI.
+     */
+    Button newGame = null;
+
+    /**
+     * Indicates whether the gold status is active.
+     */
+    private boolean isGoldStatus = false;
+
+    /**
+     * Indicates whether a heart block exists in the game.
+     */
     private boolean isExistHeartBlock = false;
 
     /**
@@ -737,7 +921,7 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
                         if (block.isDestroyed) {
                             continue;
                         }
-                        blockSerializables.add(new BlockSerializable(block.row, block.column, block.type));
+                        blockSerializables.add(new BlockSerializable(block.row, block.column, block.blockType));
                     }
 
                     outputStream.writeObject(blockSerializables);
@@ -938,7 +1122,7 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
                 if (hitCode != Block.NO_HIT) {
                     score += (scoreMultiplier * 1);
 
-                    new Score().show(block.x, block.y, 1, this);
+                    new Score().show(block.xCoordinate, block.yCoordinate, 1, this);
 
                     block.rect.setVisible(false);
                     block.isDestroyed = true;
@@ -946,7 +1130,7 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
                     //System.out.println("size is " + blocks.size());
                     resetCollideFlags();
 
-                    if (block.type == Block.BLOCK_CHOCO) {
+                    if (block.blockType == Block.BLOCK_CHOCO) {
                         final Bonus choco = new Bonus(block.row, block.column);
                         choco.timeCreated = time;
                         Platform.runLater(new Runnable() {
@@ -958,7 +1142,7 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
                         chocoBlock.add(choco);
                     }
 
-                    if (block.type == Block.BLOCK_STAR) {
+                    if (block.blockType == Block.BLOCK_STAR) {
                         goldTime = time;
                         ball.setFill(new ImagePattern(new Image("goldball.png")));
                         System.out.println("gold ball");
@@ -966,7 +1150,7 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
                         isGoldStatus = true;
                     }
 
-                    if (block.type == Block.BLOCK_HEART) {
+                    if (block.blockType == Block.BLOCK_HEART) {
                         heart++;
                     }
 

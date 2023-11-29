@@ -20,8 +20,41 @@ package brickGame;
  */
 public class GameEngine {
 
+    /**
+     * The default frames per second (FPS) value.
+     */
+    private int DEFAULT_FPS = 15;
+
+
+    /**
+     * The interface defining actions to be performed by the game engine.
+     */
+    public interface OnAction {
+        /**
+         * Called during each game update.
+         */
+        void onUpdate();
+
+        /**
+         * Called during the initialization phase.
+         */
+        void onInit();
+
+        /**
+         * Called during physics calculations.
+         */
+        void onPhysicsUpdate();
+
+        /**
+         * Called to update the game time.
+         *
+         * @param time The current time in the game.
+         */
+        void onTime(long time);
+    }
+
     private OnAction onAction;
-    private int fps = 15;
+    private int fps = 1000 / DEFAULT_FPS;
     private volatile boolean isStopped = true;
 
     private Thread updateThread;
@@ -30,14 +63,32 @@ public class GameEngine {
 
     private long time = 0;
 
+    /**
+     * Sets the action handler for the game engine.
+     *
+     * @param onAction The action handler implementing the OnAction interface.
+     */
     public void setOnAction(OnAction onAction) {
         this.onAction = onAction;
     }
 
+
+
+
+    /**
+     * Sets the frames per second (FPS) for the game engine.
+     *
+     * @param fps The desired frames per second.
+     */
     public void setFps(int fps) {
         this.fps = 1000 / fps;
     }
 
+    /**
+     * Starts a new thread for game updates. The {@code onUpdate} method of the assigned
+     * {@code OnAction} handler is called repeatedly with a delay determined by the frames
+     * per second (FPS) value.
+     */
     private void Update() {
         updateThread = new Thread(() -> {
             while (!Thread.interrupted()) {
@@ -52,10 +103,19 @@ public class GameEngine {
         updateThread.start();
     }
 
+    /**
+     * Initializes the game. The {@code onInit} method of the assigned {@code OnAction} handler
+     * is called once at the start of the game.
+     */
     private void Initialize() {
         onAction.onInit();
     }
 
+    /**
+     * Starts a new thread for physics calculations. The {@code onPhysicsUpdate} method of the
+     * assigned {@code OnAction} handler is called repeatedly with a delay determined by the
+     * frames per second (FPS) value.
+     */
     private void PhysicsCalculation() {
         physicsThread = new Thread(() -> {
             while (!Thread.interrupted()) {
@@ -70,6 +130,9 @@ public class GameEngine {
         physicsThread.start();
     }
 
+    /**
+     * Starts the game engine.
+     */
     public void start() {
         time = 0;
         Initialize();
@@ -79,6 +142,9 @@ public class GameEngine {
         isStopped = false;
     }
 
+    /**
+     * Stops the game engine.
+     */
     public void stop() {
         if (!isStopped) {
             isStopped = true;
@@ -103,14 +169,6 @@ public class GameEngine {
         timeThread.start();
     }
 
-    public interface OnAction {
-        void onUpdate();
 
-        void onInit();
-
-        void onPhysicsUpdate();
-
-        void onTime(long time);
-    }
 }
 
