@@ -3,7 +3,7 @@ Coursework for Developing Maintainable Software
 
 # Block Game Application
 
-This is a simple Block Game application built with JavaFX.
+This is a Block Game application built with JavaFX to demonstrate the implementation of developing maintainable software.
 
 ## Prerequisites
 
@@ -17,11 +17,15 @@ Before you compile and run the application, make sure you have the following ins
 
    JavaFX is bundled with JDK 8 and later versions. No separate installation is required.
 
-3. **Git:**
+3. **GitHub Desktop:**
+
+   Download and install GitHub Desktop from the official Git website: [GitHub Downloads](https://desktop.github.com/)
+
+4. **Git:**
 
    Download and install Git from the official Git website: [Git Downloads](https://git-scm.com/downloads)
 
-4. **IntelliJ IDEA Community Edition:**
+5. **IntelliJ IDEA Community Edition:**
 
    Download and install IntelliJ IDEA Community Edition, a free and open-source version of IntelliJ IDEA:
 
@@ -32,22 +36,22 @@ Before you compile and run the application, make sure you have the following ins
 1. **Clone the repository:**
 
     ```bash
-    git clone https://github.com/your-username/block-game.git
-    cd block-game
+        git clone https://github.com/your-username/COMP2042_CW_hfynl1
+        cd COMP2042_CW_hfynl1
     ```
+   Alternatively you can log into the GitHub Desktop and login to your account, click on clone repositories > search for "COMP2042_CW_hfynl1", select it and clone it into your computer. 
 
 2. **Open the project in IntelliJ IDEA:**
 
     - Open IntelliJ IDEA.
     - Choose `Open` from the main menu.
-    - Navigate to the `block-game` directory and select it.
+    - Navigate to the `COMP2042_CW_hfynl1` directory and select it.
 
 3. **Configure JavaFX SDK in IntelliJ IDEA:**
 
     - Go to `File > Project Structure > Project`.
     - Set the `Project SDK` to your installed JDK version.
     - Set the `Project language level` to the appropriate level.
-
     - Go to `File > Project Structure > Libraries`.
     - Click the `+` button and add the path to your JavaFX SDK as a library.
 
@@ -59,9 +63,9 @@ Before you compile and run the application, make sure you have the following ins
 ## Controls
 
 - Use the left and right arrow keys to move the paddle.
-- Press the space key to release the ball.
+- Press the space key to release the ball at the start of each new level.
 - Press 'S' to save the game.
-- Press 'ESC' to restart the game.
+- Press 'ESC' to instantly restart the game.
 
 ## Additional Notes
 
@@ -73,46 +77,48 @@ Before you compile and run the application, make sure you have the following ins
 
 The following features have been successfully implemented and are functioning as expected in the Block Game application:
 
-1. **Game Initialization**
-    - The game initializes with a paddle, ball, and blocks.
-    - Initial game state is set up, including the player's lives, score, and level.
+1. **Restart Game**
+    - The game will now complete reset if the 'ESC' key is pressed to allow for rapid resets of the board at the start of the game
+    - This would improve the quality fo life for speed runners of the game
 
-2. **Paddle Movement**
-    - The paddle can be moved left and right using the arrow keys.
+2. **Start of level tweak**
+    - The ball will not bounce straight away when the next level starts, and the user will have the press "SPACE" in order to release the ball and begin the level.
+    - This will give more control to the user on where they would like to begin playing the game from and make it more engaging for the player.
 
-3. **Ball Physics**
-    - The ball exhibits physics-based movement.
-    - Collisions with walls and the paddle are appropriately handled.
+3. **Gold Ball extra Perks**
+    - GoldBall status now gives the user and extra 3 multiplier to points awarded for destroying blocks.
 
-4. **Block Destruction**
-    - Blocks are destructible, and collisions between the ball and blocks trigger destruction.
-    - Different block types are considered (normal, choco, star, heart).
+4. **Wallpaper change**
+    - The wallpaper now changes according to your score, for a more interactive and engaging playing experience.
 
-5. **Bonus Block**
-    - Bonus blocks (choco) appear randomly and provide additional scoring opportunities.
-
-6. **Gold Ball Status**
-    - Achieving a specific condition (e.g., hitting a star block) activates the gold ball status.
-    - Gold ball status increases the ball speed and modifies the scoring.
-
-7. **Level Progression**
+5. **Extra Block layers**
+    - Each level has been modified to have 3 extra layers of blocks for more gameplay and a better experience.
+   
+6. **Level Progression**
     - The game progresses through levels upon completing the current level's objectives.
+    - There will be a prompt to the user to indicate that the level is complete.
 
-8. **Game Saving and Loading**
-    - Players can save and load the game state.
-    - Game state includes level, score, lives, and various flags.
+7. **Game Saving and Loading**
+   - Players can save and load the game state.
+   - Game state includes level, score, lives, and various flags.
+   - There will be a prompt to the user to indicate that the game has been saved.
 
-9. **Scoring System**
-    - Points are awarded for destroying blocks.
-    - Bonus points are given for special conditions (e.g., hitting choco blocks).
+8. **Game Over**
+     - Game over conditions are appropriately handled, considering the player's lives.
+     - There will be a prompt to the user to indicate that the game is over.
+   
+9. **Game Victory**
+   - Players advance to the next level upon completing the current level's objectives.
+   - Once player has completed a certain number of levels the game will end and the player has won
+   - The players score will also be displayed in the prompt.
 
-10. **Game Over and Level Completion**
-    - Game over conditions are appropriately handled, considering the player's lives.
-    - Players advance to the next level upon completing the current level's objectives.
-
-11. **Visual and UI Elements**
+10. **Visual and UI Elements**
     - Visual elements, such as images and colors, enhance the game's appearance.
     - UI elements, including score and heart count, are displayed and updated.
+
+11. **Background Change After Level Completion**
+    - **Issue**: The background does not change after completing a level.
+    - **Steps Taken**: Reviewed the level completion logic and background change triggers. Identified a missing event hook for background updates after level completion. Implemented the missing logic to change the background after finishing a level.
 
 ## Additional Notes
 
@@ -126,19 +132,15 @@ The following features have been implemented but are not working correctly in th
     - **Issue**: The ball freezes spontaneously in random locations during gameplay.
     - **Steps Taken**: Investigated the code related to ball movement and collisions. Implemented additional logging to trace the issue. The cause is still under investigation.
 
-2. **Background Change on Score 100**
-    - **Issue**: The background doesn't change when the player's score reaches 100.
-    - **Steps Taken**: Checked the logic responsible for background changes. Discovered an error in the score comparison condition. Modified the code to correctly trigger background changes on reaching a score of 100.
-
-3. **Font Color Change on Background Change**
+2. **Font Color Change on Background Change**
     - **Issue**: Font becomes hard to see when background changes.
     - **Steps Taken**: Examined the code handling background and font color changes. Identified a missing condition for font color updates. Added the necessary logic to change the font color to black when the background changes.
 
-4. **Background Change After Level Completion**
+3. **Background Change After Level Completion**
     - **Issue**: The background does not change after completing a level.
     - **Steps Taken**: Reviewed the level completion logic and background change triggers. Identified a missing event hook for background updates after level completion. Implemented the missing logic to change the background after finishing a level.
 
-5. **Ball Sticking to Paddle:** An attempt was made to code the ball to stick to the paddle every time it touched it. However, due to issues in calculating the ball's direction, this feature is not functioning correctly. The ball exhibits erratic behavior or freezes on the screen instead of sticking to the paddle.
+4. **Ball Sticking to Paddle:** An attempt was made to code the ball to stick to the paddle every time it touched it. However, due to issues in calculating the ball's direction, this feature is not functioning correctly. The ball exhibits erratic behavior or freezes on the screen instead of sticking to the paddle.
     - **Issue**: The calculation of the ball's direction and movement lacked precision, leading to unexpected behaviors upon collision with the paddle.
     - **Impact**: The intended "stickiness" of the ball to the paddle was not achieved, affecting the overall gameplay experience.
     - **Steps Taken to Address**
