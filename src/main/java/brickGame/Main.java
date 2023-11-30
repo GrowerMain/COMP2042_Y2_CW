@@ -371,8 +371,71 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
 
         if (!loadFromSave) {
             level++;
-            if (level >1){
-                new Score().showMessage("Level Up :)", this.primaryStage);
+            if (level == 1){
+                new Score().showMessage("Where am I?", this.primaryStage);
+            }
+            if (level == 2){
+                new Score().showMessage("Looks like I am gaining more power and growing as you destroy blocks, keep going!", this.primaryStage);
+            }
+            if (level == 3){
+                new Score().showMessage("What is this place? Am I in London? I sense something is not right...", this.primaryStage);
+            }
+            if (level == 4){
+                new Score().showMessage("It was an ILLUSION? We are under attack! Break more blocks so I can get stronger!", this.primaryStage);
+            }
+            if (level == 5){
+                new Score().showMessage("The city is not safe anymore, we need to go to the airport as soon as possible", this.primaryStage);
+            }
+            if (level == 6){
+                new Score().showMessage("The airport is not damaged yet! Lets hurry up!", this.primaryStage);
+            }
+            if (level == 7){
+                new Score().showMessage("What is that red light? Is it the aliens... we need to board a plane FAST!!", this.primaryStage);
+            }
+            if (level == 8){
+                new Score().showMessage("What is this green light? What is happening? HELPPPP", this.primaryStage);
+            }
+            if (level == 9){
+                new Score().showMessage("What just happened? Am I at the north pole? Those are the aurora lights! They are so pretty!! I am here for a purpose, lets go into that building and investigate further", this.primaryStage);
+            }
+            if (level == 10){
+                new Score().showMessage("Is that a rocket? I have never flown in one of those! Looks like the aliens are catching up, I guess there is a first for everything! :)", this.primaryStage);
+            }
+            if (level == 11){
+                new Score().showMessage("Andddddd... LIFTOFF!!! THIS IS AMAZING!!!!", this.primaryStage);
+            }
+            if (level == 12){
+                new Score().showMessage("Wait...Wait...Its too fast...Slow Down!!", this.primaryStage);
+            }
+            if (level == 13){
+                new Score().showMessage("Did I just blackou... woah IS THAT EARTH???", this.primaryStage);
+            }
+            if (level == 14){
+                new Score().showMessage("This is SO BEAUTIFUL!", this.primaryStage);
+            }
+            if (level == 15){
+                new Score().showMessage("I guess we have passed the moon now... where is this rocket taking me?", this.primaryStage);
+            }
+            if (level == 16){
+                new Score().showMessage("What was that flash...DID EARTH JUST EXPLODE?!?!?!?!", this.primaryStage);
+            }
+            if (level == 17){
+                new Score().showMessage("I see another ship in space! That must be the culprit! Lets follow it...but out fuel is running out! Nooo it's getting away!", this.primaryStage);
+            }
+            if (level == 18){
+                new Score().showMessage("Hey look there is another ship in space! It must be from the same fleet! Lets try to get on that one before it flies off too!", this.primaryStage);
+            }
+            if (level == 19){
+                new Score().showMessage("That was close...we almost didn't make it. We are in a completely different galaxy now... Is this their home?", this.primaryStage);
+            }
+            if (level == 20){
+                new Score().showMessage("We need to avenge our fallen planet, lets follow them into the portal!", this.primaryStage);
+            }
+            if (level == 21){
+                new Score().showMessage("Is that....god? NONO IT CANT BE!! EVERYTHING WE BELIEVED IN WAS A LIE!!", this.primaryStage);
+            }
+            if (level == 22){
+                new Score().showMessage("You have won my child, now rest in peace knowing your people have been avenged.", this.primaryStage);
             }
             if (level >= victoryLevel) {
                 new Score().showWin(this.primaryStage);
@@ -561,6 +624,72 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
                 break;
             case W:
                 level++;
+                if (level == 1){
+                    new Score().showMessage("Where am I?", this.primaryStage);
+                }
+                if (level == 2){
+                    new Score().showMessage("Looks like I am gaining more power and growing as you destroy blocks, keep going!", this.primaryStage);
+                }
+                if (level == 3){
+                    new Score().showMessage("What is this place? Am I in London? I sense something is not right...", this.primaryStage);
+                }
+                if (level == 4){
+                    new Score().showMessage("It was an ILLUSION? We are under attack! Break more blocks so I can get stronger!", this.primaryStage);
+                }
+                if (level == 5){
+                    new Score().showMessage("The city is not safe anymore, we need to go to the airport as soon as possible", this.primaryStage);
+                }
+                if (level == 6){
+                    new Score().showMessage("The airport is not damaged yet! Lets hurry up!", this.primaryStage);
+                }
+                if (level == 7){
+                    new Score().showMessage("What is that red light? Is it the aliens... we need to board a plane FAST!!", this.primaryStage);
+                }
+                if (level == 8){
+                    new Score().showMessage("What is this green light? What is happening? HELPPPP", this.primaryStage);
+                }
+                if (level == 9){
+                    new Score().showMessage("What just happened? Am I at the north pole? Those are the aurora lights! They are so pretty!! L ets go into that building and investigate further", this.primaryStage);
+                }
+                if (level == 10){
+                    new Score().showMessage("Is that a rocket? I have never flown in one of those! Looks like the aliens are catching up, I guess there is a first for everything! :)", this.primaryStage);
+                }
+                if (level == 11){
+                    new Score().showMessage("Andddddd... LIFTOFF!!! THIS IS AMAZING!!!!", this.primaryStage);
+                }
+                if (level == 12){
+                    new Score().showMessage("Wait...Wait...Its too fast...Slow Down!!", this.primaryStage);
+                }
+                if (level == 13){
+                    new Score().showMessage("Did I just blackou... woah IS THAT EARTH???", this.primaryStage);
+                }
+                if (level == 14){
+                    new Score().showMessage("This is SO BEAUTIFUL!", this.primaryStage);
+                }
+                if (level == 15){
+                    new Score().showMessage("I guess we have passed the moon now... where is this rocket taking me?", this.primaryStage);
+                }
+                if (level == 16){
+                    new Score().showMessage("What was that flash...DID EARTH JUST EXPLODE?!?!?!?!", this.primaryStage);
+                }
+                if (level == 17){
+                    new Score().showMessage("I see another ship in space! That must be the culprit! Lets follow it...but out fuel is running out! Nooo it's getting away!", this.primaryStage);
+                }
+                if (level == 18){
+                    new Score().showMessage("Hey look there is another ship in space! It must be from the same fleet! Lets try to get on that one before it flies off too!", this.primaryStage);
+                }
+                if (level == 19){
+                    new Score().showMessage("That was close...we almost didn't make it. We are in a completely different galaxy now... Is this their home?", this.primaryStage);
+                }
+                if (level == 20){
+                    new Score().showMessage("We need to avenge our fallen planet, lets follow them into the portal!", this.primaryStage);
+                }
+                if (level == 21){
+                    new Score().showMessage("Is that....god? NONO IT CANT BE!! EVERYTHING WE BELIEVED IN WAS A LIE!!", this.primaryStage);
+                }
+                if (level == 22) {
+                    new Score().showMessage("You have won my child, now rest in peace knowing your people have been avenged.", this.primaryStage);
+                }
                 break;
             case SPACE:
                 if (isBallStuck) {
