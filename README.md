@@ -119,6 +119,10 @@ The following features have been successfully implemented and are functioning as
 11. **Background Change After Level Completion**
     - **Issue**: The background does not change after completing a level.
     - **Steps Taken**: Reviewed the level completion logic and background change triggers. Identified a missing event hook for background updates after level completion. Implemented the missing logic to change the background after finishing a level.
+12. **Respawn Ball**
+    - The Ball will despawn when it hits the bottom border of the game and a new one will spawn on top of the paddle
+    - The player will be able to control the paddle and choose where to release the ball by pressing "SPACE"
+    - This allows for more control of the ball direction to the user in between lives
 
 ## Additional Notes
 

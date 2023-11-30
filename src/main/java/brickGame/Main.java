@@ -676,8 +676,6 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
             }
 
         } else {
-            // Handle behavior for levels other than 2
-            // You can add different logic or leave it empty depending on your requirements
 
 
             if (goDownBall) {
@@ -703,6 +701,8 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
                 if (!isGoldStatus) {
                     //TODO gameOver
                     heart--;
+                    isBallStuck = true;
+                    System.out.println("isBAllStuck is true.");
                     new Score().show((double) SCENE_WIDTH / 2, (double) SCENE_HEIGHT / 2, -1, this.primaryStage);
 
                     if (heart == 0) {
@@ -720,6 +720,12 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
             scoreMultiplier = 3;
         }else {
             scoreMultiplier = 1;
+        }
+
+        if (isBallStuck) {
+            // If the ball is stuck, update its position based on the paddle's position
+            xBall = centerBreakX;
+            yBall = yBreak - ballRadius;
         }
 
         if (yBall >= yBreak - ballRadius) {
