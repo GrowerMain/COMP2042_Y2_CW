@@ -41,7 +41,7 @@ public class Block implements Serializable {
      */
     public boolean isDestroyed = false;
 
-    private Color blockColor;
+    public Color blockColor;
 
     /**
      * The type of the block.

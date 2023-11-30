@@ -195,6 +195,19 @@ Ongoing efforts are being made to address the issues mentioned above. Developers
 - **Reason for Omission:**
   Given the scope and complexity of implementing a robust multiplayer mode, the decision was made to prioritize single-player gameplay. This choice allows for a more polished and stable gaming experience without compromising on quality.
 
+### 4. **Moving background:**
+- **Explanation:**
+  Introducing a moving background would make gameplay more engaging and improve player overal experience
+
+- **Challenges Encountered:**
+    - Having a background constantly moving can be confusing to focus on the ball.
+    - Moving background might cause user confusion between blocks and the background, potentially being a distraction for the player
+    - Rendering of the background can cause the game to lag on weaker devices
+    - the low contrast of colors between the background and blocks might affect overall gameplay
+
+- **Reason for Omission:**
+  Given the scope and complexity of implementing a robust manimated background, the decision was made to prioritize static background gameplay. This choice allows for a more polished and stable gaming experience without compromising on quality.
+
 ## Conclusion
 While these envisioned features could have added intriguing dimensions to the Block Game, practical considerations, development complexity, and the goal of delivering a stable and enjoyable user experience led to their exclusion from the current implementation.
 

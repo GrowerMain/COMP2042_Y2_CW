@@ -53,7 +53,7 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
      * The difficulty level of the game.
      */
     private int diffLevel = 4;
-
+    private static final int victoryLevel = 22;
 
     // Paddle (break) dimensions
     /**
@@ -374,7 +374,7 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
             if (level >1){
                 new Score().showMessage("Level Up :)", this.primaryStage);
             }
-            if (level == 11) {
+            if (level >= victoryLevel) {
                 new Score().showWin(this.primaryStage);
                 return;
             }
@@ -558,6 +558,9 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
                 break;
             case S:
                 saveGame();
+                break;
+            case W:
+                level++;
                 break;
             case SPACE:
                 if (isBallStuck) {
@@ -1075,12 +1078,68 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
      * </p>
      */
     private void updateBackground() {
-        if (score >= 20) {
-            root.setStyle("-fx-background-image: url('TCC2.png');");
-        }else if (score >= 10) {
-            root.setStyle("-fx-background-image: url('TCC3.jpg');");
-        } else {
-            root.setStyle(null); // Remove background image
+        if (level == 1) {
+            root.setStyle("-fx-background-image: url('bg1.jpg');");
+        }
+        if (level == 2) {
+            root.setStyle("-fx-background-image: url('bg2.png');");
+        }
+        if (level == 3) {
+            root.setStyle("-fx-background-image: url('bg3.jpg');");
+        }
+        if (level == 4) {
+            root.setStyle("-fx-background-image: url('bg4.jpg');");
+        }
+        if (level == 5) {
+            root.setStyle("-fx-background-image: url('bg5.jpg');");
+        }
+        if (level == 6) {
+            root.setStyle("-fx-background-image: url('bg6.jpg');");
+        }
+        if (level == 7) {
+            root.setStyle("-fx-background-image: url('bg7.png');");
+        }
+        if (level == 8) {
+            root.setStyle("-fx-background-image: url('bg8.jpg');");
+        }
+        if (level == 9) {
+            root.setStyle("-fx-background-image: url('bg9.jpg');");
+        }
+        if (level == 10) {
+            root.setStyle("-fx-background-image: url('bg10.png');");
+        }
+        if (level == 11) {
+            root.setStyle("-fx-background-image: url('bg11.png');");
+        }
+        if (level == 12) {
+            root.setStyle("-fx-background-image: url('bg12.png');");
+        }
+        if (level == 13) {
+            root.setStyle("-fx-background-image: url('bg13.jpg');");
+        }
+        if (level == 14) {
+            root.setStyle("-fx-background-image: url('bg14.png');");
+        }
+        if (level == 15) {
+            root.setStyle("-fx-background-image: url('bg15.jpg');");
+        }
+        if (level == 16) {
+            root.setStyle("-fx-background-image: url('bg16.jpg');");
+        }
+        if (level == 17) {
+            root.setStyle("-fx-background-image: url('bg17.jpg');");
+        }
+        if (level == 18) {
+            root.setStyle("-fx-background-image: url('bg18.jpg');");
+        }
+        if (level == 19) {
+            root.setStyle("-fx-background-image: url('bg19.jpg');");
+        }
+        if (level == 20) {
+            root.setStyle("-fx-background-image: url('bg20.jpg');");
+        }
+        if (level == 21) {
+            root.setStyle("-fx-background-image: url('bg21.jpg');");
         }
     }
 
