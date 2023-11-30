@@ -54,6 +54,7 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
      */
     private int diffLevel = 4;
     private static final int victoryLevel = 22;
+    int powerUp = 5;
 
     // Paddle (break) dimensions
     /**
@@ -287,6 +288,8 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
      */
     private Label heartLabel;
 
+    private Label powerLabel;
+
     /**
      * The label displaying the current level in the GUI.
      */
@@ -462,10 +465,13 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
         levelLabel.setTranslateY(20);
         heartLabel = new Label("Heart : " + heart);
         heartLabel.setTranslateX(SCENE_WIDTH  - 70);
+        powerLabel = new Label("Special : " + powerUp);
+        powerLabel.setTranslateX(SCENE_WIDTH  - 80);
+        powerLabel.setTranslateY(20);
         if (!loadFromSave) {
-            root.getChildren().addAll(rect, ball, scoreLabel, heartLabel, levelLabel, newGame, load);
+            root.getChildren().addAll(rect, ball, scoreLabel, heartLabel, levelLabel, powerLabel, newGame, load);
         } else {
-            root.getChildren().addAll(rect, ball, scoreLabel, heartLabel, levelLabel);
+            root.getChildren().addAll(rect, ball, scoreLabel, heartLabel, levelLabel, powerLabel);
         }
         for (Block block : blocks) {
             root.getChildren().add(block.rect);
@@ -698,6 +704,13 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
                     // Set initial velocity or any other behavior when releasing the ball
                     vX = 1.000;
                     goDownBall = true;
+                }
+                break;
+            case C:
+                if(powerUp > 0){
+                    vX = 2.000;
+                    goDownBall = !goDownBall;
+                    powerUp--;
                 }
                 break;
             case ESCAPE:
@@ -1287,6 +1300,7 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
 
                 scoreLabel.setText("Score: " + score);
                 heartLabel.setText("Heart : " + heart);
+                powerLabel.setText("Special : " + powerUp);
 
                 rect.setX(xBreak);
                 rect.setY(yBreak);
@@ -1336,10 +1350,12 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
                         System.out.println("gold ball");
                         root.getStyleClass().add("goldRoot");
                         isGoldStatus = true;
+                        powerUp++;
                     }
 
                     if (block.blockType == Block.BLOCK_HEART) {
                         heart++;
+                        powerUp += 5;
                     }
 
                     if (hitCode == Block.HIT_RIGHT) {

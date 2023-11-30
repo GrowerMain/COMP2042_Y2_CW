@@ -117,12 +117,28 @@ The following features have been successfully implemented and are functioning as
     - UI elements, including score and heart count, are displayed and updated.
 
 11. **Background Change After Level Completion**
-    - **Issue**: The background does not change after completing a level.
-    - **Steps Taken**: Reviewed the level completion logic and background change triggers. Identified a missing event hook for background updates after level completion. Implemented the missing logic to change the background after finishing a level.
-12. **Respawn Ball**
+    - The player will experience different backgrounds and dialogs to increase tension and player engagement throughout the play through for the brick game
+    - Each level has a pre-determined background for story telling purpose
+    - The player will have to ascend through each level to find out what happens next and discover new backgrounds.
+    - If the player would like to just switch backgrounds and go through the story line without playing the game, they can press 'W' to skip the gameplay.
+12. **Storyline**
+    - A dialog box will appear at the start of each level
+    - The player will be spoken to in first person
+    - There will be a campaign style storyline attached to the gamplay
+    - Unlock new dialogs as you level up!
+13. **Respawn Ball**
     - The Ball will despawn when it hits the bottom border of the game and a new one will spawn on top of the paddle
     - The player will be able to control the paddle and choose where to release the ball by pressing "SPACE"
     - This allows for more control of the ball direction to the user in between lives
+14. **Special move**
+    - The ball will now inverse its direction if the 'C' key is pressed, with a bump in the speed for a swift 180 turn
+    - This will allow players more than one way to manipulate the direction of the ball
+    - Allowing for more high skilled players to aim for challenges like not touching the paddle at all in a level
+    - players start every new game with a default amount of 5 uses of the special move, with ways to earn more during gameplay
+15. **Heart block update**
+    - Every time a Heart block is destroyed the player will gain an extra 5 special move
+16. **goldBall block update**
+    - Every time a goldBall block is destroyed the player will gain 1 extra special move 
 
 ## Additional Notes
 
