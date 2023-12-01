@@ -7,15 +7,13 @@ import java.io.Serializable;
  * It is used for saving and loading game state.
  * <p>
  * <b>HTML Note:</b> The HTML tags can be used for formatting purposes in the generated Javadocs.
- * </p>
- * <p>
  * Example usage:
+ * </p>
  * <pre>
  * {@code
  * BlockSerializable blockSerializable = new BlockSerializable(row, j, type);
  * }
  * </pre>
- * </p>
  */
 public class BlockSerializable implements Serializable {
     /**
@@ -41,12 +39,12 @@ public class BlockSerializable implements Serializable {
      * @param type  The type of the block.
      * <p>
      * Example usage:
+     * </p>
      * <pre>
      * {@code
      * BlockSerializable blockSerializable = new BlockSerializable(row, j, type);
      * }
      * </pre>
-     * </p>
      */
     public BlockSerializable(int row, int j, int type) {
         this.row = row;

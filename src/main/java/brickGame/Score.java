@@ -17,6 +17,7 @@ import javafx.stage.Stage;
  * </p>
  * <p>
  * Example usage:
+ * </p>
  * <pre>
  * {@code
  * Score score = new Score();
@@ -26,7 +27,6 @@ import javafx.stage.Stage;
  * score.showWin(main);
  * }
  * </pre>
- * </p>
  */
 public class Score {
     /**
@@ -38,12 +38,12 @@ public class Score {
      * @param main  The main game instance.
      * <p>
      * Example usage:
+     * </p>
      * <pre>
      * {@code
      * score.show(x, y, scoreValue, main);
      * }
      * </pre>
-     * </p>
      */
     public void show(final double x, final double y, int score, final Stage main) {
 
@@ -56,12 +56,12 @@ public class Score {
      * @param primaryStage The primary stage of the application.
      * <p>
      * Example usage:
+     * </p>
      * <pre>
      * {@code
      * new Score().showMessage("Game Saved", main.primaryStage());
      * }
      * </pre>
-     * </p>
      */
     public void showMessage(String message, Stage primaryStage) {
         Platform.runLater(() -> {
@@ -81,15 +81,16 @@ public class Score {
     /**
      * Displays the game over message and a restart button.
      *
-     * @param primaryStage The primary stage of the application.
+     * @param primaryStage The primary stage of the JavaFX application.
+     * @param score The final score achieved in the game.
      * <p>
      * Example usage:
+     * </p>
      * <pre>
      * {@code
      * score.showGameOver(primaryStage);
      * }
      * </pre>
-     * </p>
      */
     public void showGameOver(final Stage primaryStage, int score) {
         Platform.runLater(() -> {
@@ -110,13 +111,13 @@ public class Score {
      *
      * @param primaryStage The primary stage of the application.
      * <p>
-     * Example usage:
-     * <pre>
-     * {@code
-     * score.showWin(primaryStage);
-     * }
-     * </pre>
+     *  Example usage:
      * </p>
+     *  <pre>
+     *  {@code
+     *  score.showWin(primaryStage);
+     *  }
+     *  </pre>
      */
     public void showWin(final Stage primaryStage) {
         Platform.runLater(() -> {

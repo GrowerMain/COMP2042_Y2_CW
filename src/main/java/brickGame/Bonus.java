@@ -14,19 +14,37 @@ import java.util.Random;
  * </p>
  * <p>
  * Example usage:
+ * </p>
  * <pre>
  * {@code
  * Bonus bonus = new Bonus(row, column);
  * }
  * </pre>
- * </p>
  */
 public class Bonus implements Serializable {
+
+    /**
+     * The instance of the block.
+     */
     public Rectangle choco;
 
+    /**
+     * The x-coordinate of the bonus item.
+     */
     public double x;
+    /**
+     * The y-coordinate of the bonus item.
+     */
     public double y;
+
+    /**
+     * The timestamp value.
+     */
     public long timeCreated;
+
+    /**
+     * The boolean state of the bonus item.
+     */
     public boolean taken = false;
 
     /**
@@ -36,12 +54,12 @@ public class Bonus implements Serializable {
      * @param column The column at which the bonus is located.
      * <p>
      * Example usage:
+     * </p>
      * <pre>
      * {@code
      * Bonus bonus = new Bonus(row, column);
      * }
      * </pre>
-     * </p>
      */
     public Bonus(int row, int column) {
         x = (column * (Block.getWidth())) + Block.getPaddingH() + (Block.getWidth() / 2) - 15;

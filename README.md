@@ -334,10 +334,10 @@ These modifications in the `Main`, `GameEngine`, and `Score` classes contribute 
 
 
 - **Resolution Attempted:**
-  - After 2 weeks of tedious troubleshooting and scouring the internet 3 times over, I finally gave up on using visual studio.
-  - I deleted the github repository, and uploaded a new copy of the original file
-  - I then proceeded to download Intellij, cloned the repository and opened the folder.
-  - It detected the problem and has a quick fix prompt that once I clicked, written out the necessary dependencies in the pom.sml file and resolved my issue. what could've taken 5 minutes took me 2 weeks to figure out just because I was using a different software.
+  - After an extensive two-week troubleshooting process and thorough online research, I decided to transition from Visual Studio to IntelliJ due to unresolved issues.
+  - To start afresh, I deleted the GitHub repository and uploaded a new copy of the original file.
+  - Upon switching to IntelliJ, I cloned the repository and opened the folder, where the software promptly detected an issue. A quick fix prompt provided a resolution by automatically updating the dependencies in the pom.xml file.
+  - The transition and issue resolution in IntelliJ were notably efficient, requiring a fraction of the time compared to the prolonged troubleshooting with Visual Studio.
 
 - **Outcome:**
   - All the javaFX imports was able to resolve and I could successfully compile the project into a playable game, for the first time.

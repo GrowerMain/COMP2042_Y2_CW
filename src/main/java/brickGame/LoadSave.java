@@ -10,19 +10,18 @@ import java.util.ArrayList;
  * The {@code LoadSave} class is responsible for reading saved game data from a file.
  * It provides methods to deserialize and load the saved state of the game.
  * <p>
- * <b>HTML Note:</b> The HTML tags can be used for formatting purposes in the generated Javadocs.
+     * <b>HTML Note:</b> The HTML tags can be used for formatting purposes in the generated Javadocs.
  * </p>
  * <p>
  * Example usage:
+ * </p>
  * <pre>
  * {@code
  * LoadSave loader = new LoadSave();
  * loader.read();
  * }
  * </pre>
- * </p>
  */
-
 public class LoadSave {
     /** Indicates whether a heart block exists in the saved game state. */
     public boolean isExistHeartBlock;
@@ -106,13 +105,13 @@ public class LoadSave {
      * </p>
      * <p>
      * Example usage:
+     * </p>
      * <pre>
      * {@code
      * LoadSave loader = new LoadSave();
      * loader.read();
      * }
      * </pre>
-     * </p>
      */
     public void read() {
 

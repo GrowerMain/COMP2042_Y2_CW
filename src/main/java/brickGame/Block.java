@@ -15,13 +15,13 @@ import java.io.Serializable;
  * </p>
  * <p>
  * Example usage:
+ * </p>
  * <pre>
  * {@code
  * Block block = new Block(row, column, color, type);
  * int hitResult = block.checkHitToBlock(xBall, yBall);
  * }
  * </pre>
- * </p>
  */
 public class Block implements Serializable {
     private static Block block = new Block(-1, -1, Color.TRANSPARENT, 99);
@@ -41,6 +41,9 @@ public class Block implements Serializable {
      */
     public boolean isDestroyed = false;
 
+    /**
+     * The color of the block.
+     */
     public Color blockColor;
 
     /**
@@ -57,11 +60,27 @@ public class Block implements Serializable {
      * The y-coordinate of the block.
      */
     public int yCoordinate;
-
-    private int blockWidth = 100;
-    private int blockHeight = 30;
+    /**
+     * The width of the block.
+     */
+    private final int blockWidth = 100;
+    /**
+     * The height of the block.
+     */
+    private final int blockHeight = 30;
+    /**
+     * The padding from the top of the window.
+     */
     private int paddingTop = blockHeight * 2;
-    private int paddingH = 50;
+
+    /**
+     * The padding from the left of the window.
+     */
+    private final int paddingH = 50;
+
+    /**
+     * The instance of the paddle.
+     */
     public Rectangle rect;
 
     /**
@@ -118,12 +137,12 @@ public class Block implements Serializable {
      * @param type   The type of the block.
      * <p>
      * Example usage:
+     * </p>
      * <pre>
      * {@code
      * Block block = new Block(row, column, color, type);
      * }
      * </pre>
-     * </p>
      */
     public Block(int row, int column, Color color, int type) {
         this.row = row;
@@ -192,12 +211,12 @@ public class Block implements Serializable {
      * @return The hit direction constant.
      * <p>
      * Example usage:
+     * </p>
      * <pre>
      * {@code
      * int hitResult = block.checkHitToBlock(xBall, yBall);
      * }
      * </pre>
-     * </p>
      */
     public int checkHitToBlock(double xBall, double yBall) {
 
@@ -230,12 +249,12 @@ public class Block implements Serializable {
      * @return The padding at the top of the blocks.
      * <p>
      * Example usage:
+     * </p>
      * <pre>
      * {@code
      * int paddingTop = Block.getPaddingTop();
      * }
      * </pre>
-     * </p>
      */
     public static int getPaddingTop() {
         return block.paddingTop;
@@ -247,12 +266,12 @@ public class Block implements Serializable {
      * @return The horizontal padding of the blocks.
      * <p>
      * Example usage:
+     * </p>
      * <pre>
      * {@code
      * int paddingH = Block.getPaddingH();
      * }
      * </pre>
-     * </p>
      */
     public static int getPaddingH() {
         return block.paddingH;
@@ -264,12 +283,12 @@ public class Block implements Serializable {
      * @return The height of the blocks.
      * <p>
      * Example usage:
+     * </p>
      * <pre>
      * {@code
      * int height = Block.getHeight();
      * }
      * </pre>
-     * </p>
      */
     public static int getHeight() {
         return block.blockHeight;
@@ -281,12 +300,12 @@ public class Block implements Serializable {
      * @return The width of the blocks.
      * <p>
      * Example usage:
+     * </p>
      * <pre>
      * {@code
      * int width = Block.getWidth();
      * }
      * </pre>
-     * </p>
      */
     public static int getWidth() {
         return block.blockWidth;

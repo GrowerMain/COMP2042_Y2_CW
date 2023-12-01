@@ -20,10 +20,11 @@ import java.util.ArrayList;
 import java.util.Random;
 
 /**
- * This class is the main entry point for the Block Game application.
- * It extends the JavaFX `Application` class and implements the `EventHandler<KeyEvent>`
+ * <p>This class is the main entry point for the Block Game application.
+ * It extends the JavaFX `Application` class and implements the `EventHandler`
  * and `GameEngine.OnAction` interfaces to handle keyboard events and game actions, respectively.
  * Example usage:
+ * </p>
  * <pre>
  * {@code
  * public static void main(String[] args) {
@@ -31,14 +32,13 @@ import java.util.Random;
  * }
  * }
  * </pre>
- * </p>
  * <p>The game involves a ball, a paddle, and various blocks. The goal is to destroy the blocks
  * using the ball, controlled by the paddle, and advance through levels.
+ * </p>
  *
  * @author Nicholas Lum
  * @version 1.0
  */
-
 public class Main extends Application implements EventHandler<KeyEvent>, GameEngine.OnAction {
 
 
@@ -333,6 +333,7 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
      * Initializes the game and sets up the primary stage.
      * <p>
      * Example usage:
+     * </p>
      * <pre>
      * {@code
      * public static void main(String[] args) {
@@ -340,7 +341,6 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
      * }
      * }
      * </pre>
-     * </p>
      *
      * @param args Command line arguments (not used).
      */
@@ -356,6 +356,7 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
      * </p>
      * <p>
      * Example usage:
+     * </p>
      * <pre>
      * {@code
      * engine = new GameEngine();
@@ -364,7 +365,6 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
      * engine.start();
      * }
      * </pre>
-     * </p>
      */
     // Start method for initializing the game
     @Override
@@ -1177,12 +1177,12 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
      * Restarts the game with initial settings.
      * <p>
      * Example usage:
+     * </p>
      * <pre>
      * {@code
      * restartGame();
      * }
      * </pre>
-     * </p>
      */
     public void restartGame() {
 

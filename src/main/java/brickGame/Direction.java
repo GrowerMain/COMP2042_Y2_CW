@@ -15,5 +15,27 @@ package brickGame;
  * </pre>
  */
 public enum Direction {
-    LEFT, RIGHT
+    /**
+     * Represents the left direction.
+     * <p>Usage example:</p>
+     * <pre>
+     * {@code
+     * Direction playerDirection = Direction.LEFT;
+     * // Perform actions for left movement
+     * }
+     * </pre>
+     */
+    LEFT,
+
+    /**
+     * Represents the right direction.
+     * <p>Usage example:</p>
+     * <pre>
+     * {@code
+     * Direction playerDirection = Direction.RIGHT;
+     * // Perform actions for right movement
+     * }
+     * </pre>
+     */
+    RIGHT
 }

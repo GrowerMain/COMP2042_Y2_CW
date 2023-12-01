@@ -5,9 +5,8 @@ package brickGame;
  * physics calculations, and time tracking.
  * <p>
  * <b>HTML Note:</b> The HTML tags can be used for formatting purposes in the generated Javadocs.
- * </p>
- * <p>
  * Example usage:
+ * </p>
  * <pre>
  * {@code
  * GameEngine engine = new GameEngine();
@@ -16,7 +15,6 @@ package brickGame;
  * engine.start();
  * }
  * </pre>
- * </p>
  */
 public class GameEngine {
 
