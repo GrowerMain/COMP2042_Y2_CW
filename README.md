@@ -324,6 +324,24 @@ These modifications in the `Main`, `GameEngine`, and `Score` classes contribute 
 
 - **Outcome:**
     - While the frequency of rendering glitches was reduced, completely eliminating the issue required further investigation.
+## 3. **Integration of JavaFX into the project**
+### Description:
+- **Problem:**
+    - The initial attempt to resolve javaFX imports took multiple hours of online forum searching and downloading tons of libraries locally, all in the attempt to get the game to compile
+
+- **Challenge:**
+  - Initially I was using visual studio code to edit the project folder, but VSC was not built specially to process java projects so there was alot of steps that are automated in other apps like Eclispe and Intellij that I have to do manually.
+
+
+- **Resolution Attempted:**
+  - After 2 weeks of tedious troubleshooting and scouring the internet 3 times over, I finally gave up on using visual studio.
+  - I deleted the github repository, and uploaded a new copy of the original file
+  - I then proceeded to download Intellij, cloned the repository and opened the folder.
+  - It detected the problem and has a quick fix prompt that once I clicked, written out the necessary dependencies in the pom.sml file and resolved my issue. what could've taken 5 minutes took me 2 weeks to figure out just because I was using a different software.
+
+- **Outcome:**
+  - All the javaFX imports was able to resolve and I could successfully compile the project into a playable game, for the first time.
+
 
 ## Conclusion:
 Unexpected challenges in achieving precise ball-paddle interactions and occasional rendering glitches posed difficulties during the assignment. Despite attempts to address these issues, complete resolution proved elusive, highlighting the complexity of fine-tuning game mechanics and graphics rendering.
