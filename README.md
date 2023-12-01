@@ -155,49 +155,51 @@ The following features have been implemented but are not working correctly in th
 2. **Font Color Change on Background Change**
     - **Issue**: Font becomes hard to see when background changes.
     - **Steps Taken**: Examined the code handling background and font color changes. Identified a missing condition for font color updates. Added the necessary logic to change the font color to black when the background changes.
+    - **Resolution**:
+      - The font color issue was unsuccessfully addressed, as different backgrounds will require a different color for most contrast and visibility
+      - A rollback of the previous generation code was required to restore complete game functionality.
+      - All the backgrounds chosen either had a dark color theme or have a darker color area where all the text are displayed.
+      - As a result, the players readability of the text is not affected much throughout all the game levels.
 
-3. **Background Change After Level Completion**
-    - **Issue**: The background does not change after completing a level.
-    - **Steps Taken**: Reviewed the level completion logic and background change triggers. Identified a missing event hook for background updates after level completion. Implemented the missing logic to change the background after finishing a level.
-
-4. **Ball Sticking to Paddle:** An attempt was made to code the ball to stick to the paddle every time it touched it. However, due to issues in calculating the ball's direction, this feature is not functioning correctly. The ball exhibits erratic behavior or freezes on the screen instead of sticking to the paddle.
+3. **Ball Sticking to Paddle:** An attempt was made to code the ball to stick to the paddle at higher levels of the game every time it touched it. However, due to issues in calculating the ball's direction, this feature is not functioning correctly. The ball exhibits erratic behavior or freezes on the screen instead of sticking to the paddle.
     - **Issue**: The calculation of the ball's direction and movement lacked precision, leading to unexpected behaviors upon collision with the paddle.
     - **Impact**: The intended "stickiness" of the ball to the paddle was not achieved, affecting the overall gameplay experience.
     - **Steps Taken to Address**
       1. **Code Review:** Conducted a thorough review of the code related to ball-paddle interactions.
       2. **Debugging:** Implemented debugging techniques to trace the flow of execution during collisions.
-      3. **Mathematical Corrections:** Adjusted calculations for updating the ball's position post-collision.
-      4. **Testing:** Rigorously tested the modified code to validate changes and ensure desired behavior.
-    - **Resolution**: The ball-paddle interaction issue was unsuccessfully addressed, and a rollback of the previous generation code was required to restore complete game functionality.
+      3. **Testing:** Rigorously tested the modified code to validate changes and ensure desired behavior.
+   - **Resolution**: The ball-paddle interaction issue was unsuccessfully addressed, and a rollback of the previous generation code was required to restore complete game functionality.
 ## Additional Notes
 
 Ongoing efforts are being made to address the issues mentioned above. Developers are encouraged to collaborate on resolving these challenges and improving the overall functionality of the Block Game application.
 
 # Features Not Implemented
 
-### 1. **Advanced Ball Trajectory Prediction:**
+### 1. **Advanced Ball Trajectory Prediction Lines:**
 - **Explanation:**
-  Implementing an advanced ball trajectory prediction system was considered to enhance gameplay by providing players with more strategic control. However, the complexity involved in accurately predicting the ball's trajectory based on varying paddle angles, block configurations, and real-time physics proved to be a significant challenge.
+  Implementing an advanced ball trajectory prediction system was considered to enhance gameplay by providing players with more strategic control. However, the complexity involved in accurately drawing the ball's trajectory line based on varying paddle angles, block configurations, and real-time physics proved to be a significant challenge.
 
 - **Challenges Encountered:**
     - Predicting collisions with multiple blocks simultaneously.
     - Adjusting trajectory based on dynamic changes in paddle angle.
+    - Not knowing when to stop displaying the prediction lines as it would be useless to the player and would only be a distraction to the gameplay.
     - Balancing computational load to maintain smooth gameplay.
 
 - **Reason for Omission:**
-  The implementation complexity and potential performance impact outweighed the perceived gameplay benefits. Focusing on refining existing features and maintaining a consistent gaming experience took precedence over the challenges posed by this advanced trajectory prediction.
+  The implementation complexity and potential performance impact outweighed the perceived gameplay benefits. Focusing on refining existing features and maintaining a consistent gaming experience took precedence over the challenges posed by this advanced trajectory prediction line.
 
 ### 2. **Dynamic Level Generation:**
 - **Explanation:**
-  Dynamic level generation, where levels are procedurally generated based on algorithms, was envisioned to add variety to gameplay. However, developing a robust algorithm to create challenging yet balanced levels in real-time presented formidable challenges.
+  Dynamic level generation, where blocks are procedurally generated based on algorithms mid-level, was envisioned to add variety to gameplay. However, developing a robust algorithm to create challenging yet balanced levels in real-time presented formidable challenges.
 
 - **Challenges Encountered:**
     - Balancing difficulty without making levels too easy or overly complex.
     - Ensuring coherence and aesthetic appeal in dynamically generated levels.
     - Avoiding patterns that lead to unbeatable scenarios.
+    - Generation of blocks in unreachable areas that would cause the level to reach a deadlock scenario where the player will never be able to win.
 
 - **Reason for Omission:**
-  The intricate nature of level design and the potential for unpredictable or unfair challenges in dynamically generated levels led to the decision to focus on handcrafted levels. This approach ensures a more curated and enjoyable gaming experience for players.
+  The intricate nature of level design and the potential for unpredictable or unfair challenges in dynamically generated levels led to the decision to focus on statically generated blocks pre-levels. This approach ensures a more curated and enjoyable gaming experience for players.
 
 ### 3. **Multiplayer Mode:**
 - **Explanation:**
@@ -213,7 +215,7 @@ Ongoing efforts are being made to address the issues mentioned above. Developers
 
 ### 4. **Moving background:**
 - **Explanation:**
-  Introducing a moving background would make gameplay more engaging and improve player overal experience
+  Introducing a moving background would make gameplay more engaging and improve player overall experience
 
 - **Challenges Encountered:**
     - Having a background constantly moving can be confusing to focus on the ball.
@@ -242,21 +244,31 @@ While these envisioned features could have added intriguing dimensions to the Bl
 
 - **Adjusted Paddle Movement:**
     - Modified the `move(int direction)` method to prevent paddle movement while the ball is stuck.
+  
+- **Added new method updateBackground:**
+    - Changes the background every level to co-inside with the newly developed campaign story of the game
+- **Modified start():**
+    - Included dialog messages that load in at the start of each level, that provides a vivid and interesting storyline for users to follow as the play the game.
 
 ### Reasons for Modifications:
 - **Ball Sticking Mechanism:**
-    - The introduction of the `isBallStuck` variable and corresponding modifications in `initBall()` and `setPhysicsToBall()` were necessary to implement a controlled release of the ball from the paddle.
+  - The introduction of the `isBallStuck` variable and corresponding modifications in `initBall()` and `setPhysicsToBall()` were necessary to implement a controlled release of the ball from the paddle.
 
 - **Enhanced Gameplay Dynamics:**
-    - These changes aim to improve gameplay dynamics by providing more control to the player over the initial trajectory of the ball.
+  - These changes aim to improve gameplay dynamics by providing more control to the player over the initial trajectory of the ball.
 
 - **Paddle-Ball Interaction:**
-    - Adjustments to the paddle movement prevent unintended interactions while the ball is in a stuck state, avoiding disruptions to the gaming experience.
+  - Adjustments to the paddle movement prevent unintended interactions while the ball is in a stuck state, avoiding disruptions to the gaming experience.
+- **Added new method updateBackground:**
+  - The method allows for plug and play of different background photos easily, making it easier for a developer to swap out the given set of photos, and have different sequence or photos displayed entirely.
+  
+- **Modified start():**
+  - The method allows for plug and play of different dialogs easily, making it easier for a developer to swap out the given set of dialogs, and create a different storyline altogether.
 
 ## 2. **GameEngine.java**
 ### Changes Made:
 - **Adjusted Physics Update Call:**
-    - Extended the `onPhysicsUpdate()` method to include a call to `setPhysicsToBall()` from the `Main` class.
+      - Extended the `onPhysicsUpdate()` method to include a call to `setPhysicsToBall()` from the `Main` class.
 
 ### Reasons for Modifications:
 - **Integration with Main Class:**
