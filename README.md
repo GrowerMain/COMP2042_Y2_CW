@@ -139,6 +139,14 @@ The following features have been successfully implemented and are functioning as
     - Every time a Heart block is destroyed the player will gain an extra 5 special move
 16. **goldBall block update**
     - Every time a goldBall block is destroyed the player will gain 1 extra special move 
+17. **Sound for Destroying special blocks**
+    - Every time a special block is destroyed a unique wound will be played for better player engagement.
+18. **Sound for level-up and game start**
+    - The game will play a sound whenever there is a level up event or a game start event.
+19. **Sounds**
+    - The game now has sounds that are save within the local project folder.
+    - They are set up to be dynamically retrievable from any different root source path folders
+    - The sounds are only played on special events that will trigger upon specific player actions
 
 ## Additional Notes
 
@@ -228,6 +236,43 @@ Ongoing efforts are being made to address the issues mentioned above. Developers
 
 ## Conclusion
 While these envisioned features could have added intriguing dimensions to the Block Game, practical considerations, development complexity, and the goal of delivering a stable and enjoyable user experience led to their exclusion from the current implementation.
+
+# New Java Classes
+
+## SoundPlayer Class
+
+The `SoundPlayer` class is designed for handling audio playback in a JavaFX application. It utilizes the JavaFX media framework to manage the loading and playing of audio files. The class includes the following methods:
+
+### Constructor
+
+- `public SoundPlayer(String soundFilePath)`: Initializes a `SoundPlayer` object with the path to an audio file.
+    - **Parameters:**
+        - `soundFilePath`: A `String` representing the file path of the audio file.
+
+### play() Method
+
+- `public void play()`: Plays the loaded sound. This method stops the current playback, resets the media player to its initial state, and then starts playing the sound.
+
+### reset() Method
+
+- `public void reset()`: Stops the current playback and resets the media player to its initial state.
+
+## Direction Enum
+
+The `Direction` enum represents the possible movement directions in a game. It includes two constants: `LEFT` and `RIGHT`, which signify leftward and rightward movements, respectively.
+
+### Constants
+
+- `LEFT`: Represents the left direction.
+- `RIGHT`: Represents the right direction.
+
+### Usage Example
+
+The `Direction` enum provides a convenient and type-safe way to handle movement directions in a game. Usage examples include:
+
+- ```java
+  Direction playerDirection = Direction.LEFT;
+  // Perform actions for left movement
 
 # Modified Java Classes
 

@@ -41,8 +41,6 @@ import java.util.Random;
  */
 public class Main extends Application implements EventHandler<KeyEvent>, GameEngine.OnAction {
 
-
-
     // Game settings
     /**
      * The current level of the game.
@@ -327,6 +325,13 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
      */
     private boolean isExistHeartBlock = false;
 
+    private SoundPlayer startPlayer;
+    private SoundPlayer chocoPlayer;
+    private SoundPlayer heartPlayer;
+    private SoundPlayer starPlayer;
+    private SoundPlayer winPlayer;
+
+
 
     /**
      * The main entry point for the application.
@@ -371,9 +376,26 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
     public void start(Stage primaryStage) throws Exception {
         this.primaryStage = primaryStage;
 
+        // Initialize the SoundPlayer with the sound file path
+        String playStartSound = "src/main/resources/start.mp3";
+        String playChocoSound = "src/main/resources/choco.mp3";
+        String playHeartSound = "src/main/resources/heart.mp3";
+        String playStarSound = "src/main/resources/star.mp3";
+        String playWinSound = "src/main/resources/levelup.mp3";
+
+        startPlayer = new SoundPlayer(playStartSound);
+        chocoPlayer = new SoundPlayer(playChocoSound);
+        heartPlayer = new SoundPlayer(playHeartSound);
+        starPlayer = new SoundPlayer(playStarSound);
+        winPlayer = new SoundPlayer(playWinSound);
+
+        // Play the sound using the SoundPlayer
+        startPlayer.play();
 
         if (!loadFromSave) {
             level++;
+            winPlayer.play();
+
             if (level == 1){
                 new Score().showMessage("Where am I?", this.primaryStage);
             }
@@ -631,7 +653,7 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
             case W:
                 level++;
                 if (level == 1){
-                    new Score().showMessage("Where am I?", this.primaryStage);
+                    new Score().showMessage("Where am I?", this.primaryStage);;
                 }
                 if (level == 2){
                     new Score().showMessage("Looks like I am gaining more power and growing as you destroy blocks, keep going!", this.primaryStage);
@@ -1341,6 +1363,7 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
                                 root.getChildren().add(choco.choco);
                             }
                         });
+                        chocoPlayer.play();
                         chocoBlock.add(choco);
                     }
 
@@ -1351,11 +1374,13 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
                         root.getStyleClass().add("goldRoot");
                         isGoldStatus = true;
                         powerUp++;
+                        starPlayer.play();
                     }
 
                     if (block.blockType == Block.BLOCK_HEART) {
                         heart++;
                         powerUp += 5;
+                        heartPlayer.play();
                     }
 
                     if (hitCode == Block.HIT_RIGHT) {
