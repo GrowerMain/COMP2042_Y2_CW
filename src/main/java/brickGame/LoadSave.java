@@ -10,7 +10,7 @@ import java.util.ArrayList;
  * The {@code LoadSave} class is responsible for reading saved game data from a file.
  * It provides methods to deserialize and load the saved state of the game.
  * <p>
-     * <b>HTML Note:</b> The HTML tags can be used for formatting purposes in the generated Javadocs.
+ * <b>HTML Note:</b> The HTML tags can be used for formatting purposes in the generated Javadocs.
  * </p>
  * <p>
  * Example usage:
@@ -23,79 +23,129 @@ import java.util.ArrayList;
  * </pre>
  */
 public class LoadSave {
-    /** Indicates whether a heart block exists in the saved game state. */
+    /**
+     * Indicates whether a heart block exists in the saved game state.
+     */
     public boolean isExistHeartBlock;
 
-    /** Indicates whether the game is in a gold status. */
+    /**
+     * Indicates whether the game is in a gold status.
+     */
     public boolean isGoldStatus;
 
-    /** Indicates the direction of the ball's vertical movement. */
+    /**
+     * Indicates the direction of the ball's vertical movement.
+     */
     public boolean goDownBall;
 
-    /** Indicates the direction of the ball's horizontal movement. */
+    /**
+     * Indicates the direction of the ball's horizontal movement.
+     */
     public boolean goRightBall;
 
-    /** Indicates collision with the break (paddle). */
+    /**
+     * Indicates collision with the break (paddle).
+     */
     public boolean collideToBreak;
 
-    /** Indicates collision with the break and moving to the right. */
+    /**
+     * Indicates collision with the break and moving to the right.
+     */
     public boolean collideToBreakAndMoveToRight;
 
-    /** Indicates collision with the right wall. */
+    /**
+     * Indicates collision with the right wall.
+     */
     public boolean collideToRightWall;
 
-    /** Indicates collision with the left wall. */
+    /**
+     * Indicates collision with the left wall.
+     */
     public boolean collideToLeftWall;
 
-    /** Indicates collision with a block on the right. */
+    /**
+     * Indicates collision with a block on the right.
+     */
     public boolean collideToRightBlock;
 
-    /** Indicates collision with the bottom of a block. */
+    /**
+     * Indicates collision with the bottom of a block.
+     */
     public boolean collideToBottomBlock;
 
-    /** Indicates collision with a block on the left. */
+    /**
+     * Indicates collision with a block on the left.
+     */
     public boolean collideToLeftBlock;
 
-    /** Indicates collision with the top of a block. */
+    /**
+     * Indicates collision with the top of a block.
+     */
     public boolean collideToTopBlock;
 
-    /** Represents the current level in the saved game state. */
+    /**
+     * Represents the current level in the saved game state.
+     */
     public int level;
 
-    /** Represents the score in the saved game state. */
+    /**
+     * Represents the score in the saved game state.
+     */
     public int score;
 
-    /** Represents the number of remaining lives (heart) in the saved game state. */
+    /**
+     * Represents the number of remaining lives (heart) in the saved game state.
+     */
     public int heart;
 
-    /** Represents the count of destroyed blocks in the saved game state. */
+    /**
+     * Represents the count of destroyed blocks in the saved game state.
+     */
     public int destroyedBlockCount;
 
-    /** Represents the x-coordinate of the ball in the saved game state. */
+    /**
+     * Represents the x-coordinate of the ball in the saved game state.
+     */
     public double xBall;
 
-    /** Represents the y-coordinate of the ball in the saved game state. */
+    /**
+     * Represents the y-coordinate of the ball in the saved game state.
+     */
     public double yBall;
 
-    /** Represents the x-coordinate of the break (paddle) in the saved game state. */
+    /**
+     * Represents the x-coordinate of the break (paddle) in the saved game state.
+     */
     public double xBreak;
 
-    /** Represents the y-coordinate of the break (paddle) in the saved game state. */
+    /**
+     * Represents the y-coordinate of the break (paddle) in the saved game state.
+     */
     public double yBreak;
 
-    /** Represents the center x-coordinate of the break (paddle) in the saved game state. */
+    /**
+     * Represents the center x-coordinate of the break (paddle) in the saved game state.
+     */
     public double centerBreakX;
 
-    /** Represents the time in the saved game state. */
+    /**
+     * Represents the time in the saved game state.
+     */
     public long time;
 
-    /** Represents the gold time in the saved game state. */
+    /**
+     * Represents the gold time in the saved game state.
+     */
     public long goldTime;
 
-    /** Represents the velocity of the ball in the saved game state. */
+    /**
+     * Represents the velocity of the ball in the saved game state.
+     */
     public double vX;
 
-    /** Represents the list of serialized blocks in the saved game state. */
+    /**
+     * Represents the list of serialized blocks in the saved game state.
+     */
     public ArrayList<BlockSerializable> blocks = new ArrayList<>();
 
     /**

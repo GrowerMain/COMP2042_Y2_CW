@@ -24,42 +24,43 @@ import java.io.Serializable;
  * </pre>
  */
 public class Block implements Serializable {
-    private static Block block = new Block(-1, -1, Color.TRANSPARENT, 99);
-
     /**
-     * The row position of the block.
+     * Represents no hit direction.
      */
-    public int row;
-
+    public static int NO_HIT = -1;
     /**
-     * The column position of the block.
+     * Represents a hit to the right direction.
      */
-    public int column;
-
+    public static int HIT_RIGHT = 0;
     /**
-     * Indicates whether the block is destroyed.
+     * Represents a hit to the bottom direction.
      */
-    public boolean isDestroyed = false;
-
+    public static int HIT_BOTTOM = 1;
     /**
-     * The color of the block.
+     * Represents a hit to the left direction.
      */
-    public Color blockColor;
-
+    public static int HIT_LEFT = 2;
     /**
-     * The type of the block.
+     * Represents a hit to the top direction.
      */
-    public int blockType;
-
+    public static int HIT_TOP = 3;
     /**
-     * The x-coordinate of the block.
+     * Represents a normal block type.
      */
-    public int xCoordinate;
-
+    public static int BLOCK_NORMAL = 99;
     /**
-     * The y-coordinate of the block.
+     * Represents a choco block type.
      */
-    public int yCoordinate;
+    public static int BLOCK_CHOCO = 100;
+    /**
+     * Represents a star block type.
+     */
+    public static int BLOCK_STAR = 101;
+    /**
+     * Represents a heart block type.
+     */
+    public static int BLOCK_HEART = 102;
+    private static final Block block = new Block(-1, -1, Color.TRANSPARENT, 99);
     /**
      * The width of the block.
      */
@@ -69,64 +70,45 @@ public class Block implements Serializable {
      */
     private final int blockHeight = 30;
     /**
-     * The padding from the top of the window.
-     */
-    private int paddingTop = blockHeight * 2;
-
-    /**
      * The padding from the left of the window.
      */
     private final int paddingH = 50;
-
+    /**
+     * The row position of the block.
+     */
+    public int row;
+    /**
+     * The column position of the block.
+     */
+    public int column;
+    /**
+     * Indicates whether the block is destroyed.
+     */
+    public boolean isDestroyed = false;
+    /**
+     * The color of the block.
+     */
+    public Color blockColor;
+    /**
+     * The type of the block.
+     */
+    public int blockType;
+    /**
+     * The x-coordinate of the block.
+     */
+    public int xCoordinate;
+    /**
+     * The y-coordinate of the block.
+     */
+    public int yCoordinate;
     /**
      * The instance of the paddle.
      */
     public Rectangle rect;
-
     /**
-     * Represents no hit direction.
+     * The padding from the top of the window.
      */
-    public static int NO_HIT = -1;
-
-    /**
-     * Represents a hit to the right direction.
-     */
-    public static int HIT_RIGHT = 0;
-
-    /**
-     * Represents a hit to the bottom direction.
-     */
-    public static int HIT_BOTTOM = 1;
-
-    /**
-     * Represents a hit to the left direction.
-     */
-    public static int HIT_LEFT = 2;
-
-    /**
-     * Represents a hit to the top direction.
-     */
-    public static int HIT_TOP = 3;
-
-    /**
-     * Represents a normal block type.
-     */
-    public static int BLOCK_NORMAL = 99;
-
-    /**
-     * Represents a choco block type.
-     */
-    public static int BLOCK_CHOCO = 100;
-
-    /**
-     * Represents a star block type.
-     */
-    public static int BLOCK_STAR = 101;
-
-    /**
-     * Represents a heart block type.
-     */
-    public static int BLOCK_HEART = 102;
+    private final int paddingTop = blockHeight * 2;
 
     /**
      * Constructs a {@code Block} object with the specified row, column, color, and type.
@@ -135,14 +117,14 @@ public class Block implements Serializable {
      * @param column The column position of the block.
      * @param color  The color of the block.
      * @param type   The type of the block.
-     * <p>
-     * Example usage:
-     * </p>
-     * <pre>
-     * {@code
-     * Block block = new Block(row, column, color, type);
-     * }
-     * </pre>
+     *               <p>
+     *               Example usage:
+     *               </p>
+     *               <pre>
+     *               {@code
+     *               Block block = new Block(row, column, color, type);
+     *               }
+     *               </pre>
      */
     public Block(int row, int column, Color color, int type) {
         this.row = row;
@@ -153,6 +135,73 @@ public class Block implements Serializable {
         draw();
     }
 
+    /**
+     * Gets the padding at the top of the blocks.
+     *
+     * @return The padding at the top of the blocks.
+     * <p>
+     * Example usage:
+     * </p>
+     * <pre>
+     * {@code
+     * int paddingTop = Block.getPaddingTop();
+     * }
+     * </pre>
+     */
+    public static int getPaddingTop() {
+        return block.paddingTop;
+    }
+
+    /**
+     * Gets the horizontal padding of the blocks.
+     *
+     * @return The horizontal padding of the blocks.
+     * <p>
+     * Example usage:
+     * </p>
+     * <pre>
+     * {@code
+     * int paddingH = Block.getPaddingH();
+     * }
+     * </pre>
+     */
+    public static int getPaddingH() {
+        return block.paddingH;
+    }
+
+    /**
+     * Gets the height of the blocks.
+     *
+     * @return The height of the blocks.
+     * <p>
+     * Example usage:
+     * </p>
+     * <pre>
+     * {@code
+     * int height = Block.getHeight();
+     * }
+     * </pre>
+     */
+    public static int getHeight() {
+        return block.blockHeight;
+    }
+
+    /**
+     * Gets the width of the blocks.
+     *
+     * @return The width of the blocks.
+     * <p>
+     * Example usage:
+     * </p>
+     * <pre>
+     * {@code
+     * int width = Block.getWidth();
+     * }
+     * </pre>
+     */
+    public static int getWidth() {
+        return block.blockWidth;
+    }
 
     /**
      * Draws the graphical representation of the block based on its properties.
@@ -241,73 +290,5 @@ public class Block implements Serializable {
         }
 
         return NO_HIT;
-    }
-
-    /**
-     * Gets the padding at the top of the blocks.
-     *
-     * @return The padding at the top of the blocks.
-     * <p>
-     * Example usage:
-     * </p>
-     * <pre>
-     * {@code
-     * int paddingTop = Block.getPaddingTop();
-     * }
-     * </pre>
-     */
-    public static int getPaddingTop() {
-        return block.paddingTop;
-    }
-
-    /**
-     * Gets the horizontal padding of the blocks.
-     *
-     * @return The horizontal padding of the blocks.
-     * <p>
-     * Example usage:
-     * </p>
-     * <pre>
-     * {@code
-     * int paddingH = Block.getPaddingH();
-     * }
-     * </pre>
-     */
-    public static int getPaddingH() {
-        return block.paddingH;
-    }
-
-    /**
-     * Gets the height of the blocks.
-     *
-     * @return The height of the blocks.
-     * <p>
-     * Example usage:
-     * </p>
-     * <pre>
-     * {@code
-     * int height = Block.getHeight();
-     * }
-     * </pre>
-     */
-    public static int getHeight() {
-        return block.blockHeight;
-    }
-
-    /**
-     * Gets the width of the blocks.
-     *
-     * @return The width of the blocks.
-     * <p>
-     * Example usage:
-     * </p>
-     * <pre>
-     * {@code
-     * int width = Block.getWidth();
-     * }
-     * </pre>
-     */
-    public static int getWidth() {
-        return block.blockWidth;
     }
 }

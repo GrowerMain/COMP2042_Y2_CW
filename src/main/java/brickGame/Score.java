@@ -1,10 +1,6 @@
 package brickGame;
 
 import javafx.application.Platform;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Stage;
@@ -36,14 +32,14 @@ public class Score {
      * @param y     The y-coordinate for the score display.
      * @param score The score value to be displayed.
      * @param main  The main game instance.
-     * <p>
-     * Example usage:
-     * </p>
-     * <pre>
-     * {@code
-     * score.show(x, y, scoreValue, main);
-     * }
-     * </pre>
+     *              <p>
+     *              Example usage:
+     *              </p>
+     *              <pre>
+     *              {@code
+     *              score.show(x, y, scoreValue, main);
+     *              }
+     *              </pre>
      */
     public void show(final double x, final double y, int score, final Stage main) {
 
@@ -52,16 +48,16 @@ public class Score {
     /**
      * Displays a pop-up message.
      *
-     * @param message The message to be displayed.
+     * @param message      The message to be displayed.
      * @param primaryStage The primary stage of the application.
-     * <p>
-     * Example usage:
-     * </p>
-     * <pre>
-     * {@code
-     * new Score().showMessage("Game Saved", main.primaryStage());
-     * }
-     * </pre>
+     *                     <p>
+     *                     Example usage:
+     *                     </p>
+     *                     <pre>
+     *                     {@code
+     *                     new Score().showMessage("Game Saved", main.primaryStage());
+     *                     }
+     *                     </pre>
      */
     public void showMessage(String message, Stage primaryStage) {
         Platform.runLater(() -> {
@@ -82,15 +78,15 @@ public class Score {
      * Displays the game over message and a restart button.
      *
      * @param primaryStage The primary stage of the JavaFX application.
-     * @param score The final score achieved in the game.
-     * <p>
-     * Example usage:
-     * </p>
-     * <pre>
-     * {@code
-     * score.showGameOver(primaryStage);
-     * }
-     * </pre>
+     * @param score        The final score achieved in the game.
+     *                     <p>
+     *                     Example usage:
+     *                     </p>
+     *                     <pre>
+     *                     {@code
+     *                     score.showGameOver(primaryStage);
+     *                     }
+     *                     </pre>
      */
     public void showGameOver(final Stage primaryStage, int score) {
         Platform.runLater(() -> {
@@ -110,14 +106,14 @@ public class Score {
      * Displays the win message when the player reaches level 5.
      *
      * @param primaryStage The primary stage of the application.
-     * <p>
-     *  Example usage:
-     * </p>
-     *  <pre>
-     *  {@code
-     *  score.showWin(primaryStage);
-     *  }
-     *  </pre>
+     *                     <p>
+     *                     Example usage:
+     *                     </p>
+     *                     <pre>
+     *                      {@code
+     *                      score.showWin(primaryStage);
+     *                      }
+     *                      </pre>
      */
     public void showWin(final Stage primaryStage) {
         Platform.runLater(() -> {

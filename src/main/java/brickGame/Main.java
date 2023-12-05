@@ -15,6 +15,7 @@ import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
+
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Random;
@@ -42,215 +43,43 @@ import java.util.Random;
 public class Main extends Application implements EventHandler<KeyEvent>, GameEngine.OnAction {
 
     // Game settings
-    /**
-     * The current level of the game.
-     */
-    private int level = 0;
-
-    /**
-     * The difficulty level of the game.
-     */
-    private int diffLevel = 4;
     private static final int victoryLevel = 22;
-    int powerUp = 5;
-
-    // Paddle (break) dimensions
     /**
      * The radius of the ball in the game.
      */
     private static final int ballRadius = 10;
-
     /**
      * The width of the paddle (break) in the game.
      */
     private static final int PADDLE_WIDTH = 130;
-
     /**
      * The height of the paddle (break) in the game.
      */
     private static final int PADDLE_HEIGHT = 30;
 
+    // Paddle (break) dimensions
     /**
      * Half of the width of the paddle (break) in the game.
      */
     private static final int HALF_PADDLE_WIDTH = PADDLE_WIDTH / 2;
-
-    // Scene dimensions
-
     /**
      * The width of the game scene.
      */
     private static final int SCENE_WIDTH = 500;
-
     /**
      * The height of the game scene.
      */
     private static final int SCENE_HEIGHT = 700;
-
-    // Ball variables
-    /**
-     * The ball object in the game.
-     */
-    private Circle ball;
-
-    /**
-     * The x-coordinate of the ball.
-     */
-    private double xBall;
-
-    /**
-     * The y-coordinate of the ball.
-     */
-    private double yBall;
-
-    /**
-     * Indicates whether the ball is stuck.
-     */
-    private boolean isBallStuck = true;
-
-    // Paddle variables
-    /**
-     * The rectangle representing the paddle (break) in the game.
-     */
-    private Rectangle rect;
-
-    /**
-     * The x-coordinate of the paddle (break).
-     */
-    private double xBreak = 0.0f;
-
-    /**
-     * The y-coordinate of the paddle (break).
-     */
-    private double yBreak = 640.0f;
-
-    /**
-     * The center x-coordinate of the paddle (break).
-     */
-    private double centerBreakX;
-
-
-    // Game state variables
-    /**
-     * The count of destroyed blocks in the game.
-     */
-    private int destroyedBlockCount = 0;
-
-    /**
-     * The number of remaining heart lives.
-     */
-    private int heart = 3;
-
-    /**
-     * The score in the game.
-     */
-    private int score = 0;
-
-    /**
-     * The multiplier for the score.
-     */
-    private int scoreMultiplier = 1;
-
-    /**
-     * The current time in the game.
-     */
-    private long time = 0;
-
-    /**
-     * The time when the ball hits an object.
-     */
-    private long hitTime = 0;
-
-    /**
-     * The time when the gold status is active.
-     */
-    private long goldTime = 0;
-
-    // Ball state variables
-    /**
-     * Indicates the direction of the ball (downward).
-     */
-    private boolean goDownBall = true;
-
-    /**
-     * Indicates the direction of the ball (rightward).
-     */
-    private boolean goRightBall = true;
-
-    /**
-     * Indicates collision with the paddle (break).
-     */
-    private boolean collideToBreak = false;
-
-    /**
-     * Indicates collision with the paddle (break) and moving to the right.
-     */
-    private boolean collideToBreakAndMoveToRight = true;
-
-    /**
-     * Indicates collision with the right wall.
-     */
-    private boolean collideToRightWall = false;
-
-    /**
-     * Indicates collision with the left wall.
-     */
-    private boolean collideToLeftWall = false;
-
-    /**
-     * Indicates collision with a block on the right.
-     */
-    private boolean collideToRightBlock = false;
-
-    /**
-     * Indicates collision with a block at the bottom.
-     */
-    private boolean collideToBottomBlock = false;
-
-    /**
-     * Indicates collision with a block on the left.
-     */
-    private boolean collideToLeftBlock = false;
-
-    /**
-     * Indicates collision with a block at the top.
-     */
-    private boolean collideToTopBlock = false;
-
-    // Ball velocity variables
-
-    /**
-     * The velocity of the ball in the x-direction.
-     */
-    private double vX = 1.000;
-
-
-    // Game engine and save path
-    /**
-     * The game engine for managing game logic.
-     */
-    private GameEngine engine;
-
     /**
      * The path to save the game data.
      */
     public static String savePath = "C:/save/save.mdds";
 
+    // Scene dimensions
     /**
      * The directory path to save the game data.
      */
     public static String savePathDir = "C:/save/";
-
-    /**
-     * The list of blocks in the game.
-     */
-    private ArrayList<Block> blocks = new ArrayList<Block>();
-
-    /**
-     * The list of bonus (choco) blocks in the game.
-     */
-    private ArrayList<Bonus> chocoBlock = new ArrayList<Bonus>();
-
     /**
      * The array of colors used for blocks in the game.
      */
@@ -270,51 +99,183 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
             Color.TAN,
     };
 
-    // GUI components
-    /**
-     * The root pane of the GUI.
-     */
-    private Pane root;
-
-    /**
-     * The label displaying the score in the GUI.
-     */
-    private Label scoreLabel;
-
-    /**
-     * The label displaying the remaining heart lives in the GUI.
-     */
-    private Label heartLabel;
-
-    private Label powerLabel;
-
-    /**
-     * The label displaying the current level in the GUI.
-     */
-    private Label levelLabel;
-
-    // Flags
-    /**
-     * Indicates whether to load the game state from a save.
-     */
-    private boolean loadFromSave = false;
-
-    // Buttons
+    // Ball variables
     /**
      * The primary stage of the JavaFX application.
      */
     public Stage primaryStage;
-
+    int powerUp = 5;
     /**
      * The "Load Game" button in the GUI.
      */
     Button load = null;
-
     /**
      * The "New Game" button in the GUI.
      */
     Button newGame = null;
 
+    // Paddle variables
+    /**
+     * The current level of the game.
+     */
+    private int level = 0;
+    /**
+     * The difficulty level of the game.
+     */
+    private final int diffLevel = 4;
+    /**
+     * The ball object in the game.
+     */
+    private Circle ball;
+    /**
+     * The x-coordinate of the ball.
+     */
+    private double xBall;
+
+
+    // Game state variables
+    /**
+     * The y-coordinate of the ball.
+     */
+    private double yBall;
+    /**
+     * Indicates whether the ball is stuck.
+     */
+    private boolean isBallStuck = true;
+    /**
+     * The rectangle representing the paddle (break) in the game.
+     */
+    private Rectangle rect;
+    /**
+     * The x-coordinate of the paddle (break).
+     */
+    private double xBreak = 0.0f;
+    /**
+     * The y-coordinate of the paddle (break).
+     */
+    private double yBreak = 640.0f;
+    /**
+     * The center x-coordinate of the paddle (break).
+     */
+    private double centerBreakX;
+    /**
+     * The count of destroyed blocks in the game.
+     */
+    private int destroyedBlockCount = 0;
+
+    // Ball state variables
+    /**
+     * The number of remaining heart lives.
+     */
+    private int heart = 3;
+    /**
+     * The score in the game.
+     */
+    private int score = 0;
+    /**
+     * The multiplier for the score.
+     */
+    private int scoreMultiplier = 1;
+    /**
+     * The current time in the game.
+     */
+    private long time = 0;
+    /**
+     * The time when the ball hits an object.
+     */
+    private long hitTime = 0;
+    /**
+     * The time when the gold status is active.
+     */
+    private long goldTime = 0;
+    /**
+     * Indicates the direction of the ball (downward).
+     */
+    private boolean goDownBall = true;
+    /**
+     * Indicates the direction of the ball (rightward).
+     */
+    private boolean goRightBall = true;
+    /**
+     * Indicates collision with the paddle (break).
+     */
+    private boolean collideToBreak = false;
+    /**
+     * Indicates collision with the paddle (break) and moving to the right.
+     */
+    private boolean collideToBreakAndMoveToRight = true;
+
+    // Ball velocity variables
+    /**
+     * Indicates collision with the right wall.
+     */
+    private boolean collideToRightWall = false;
+
+
+    // Game engine and save path
+    /**
+     * Indicates collision with the left wall.
+     */
+    private boolean collideToLeftWall = false;
+    /**
+     * Indicates collision with a block on the right.
+     */
+    private boolean collideToRightBlock = false;
+    /**
+     * Indicates collision with a block at the bottom.
+     */
+    private boolean collideToBottomBlock = false;
+    /**
+     * Indicates collision with a block on the left.
+     */
+    private boolean collideToLeftBlock = false;
+    /**
+     * Indicates collision with a block at the top.
+     */
+    private boolean collideToTopBlock = false;
+    /**
+     * The velocity of the ball in the x-direction.
+     */
+    private double vX = 1.000;
+
+    // GUI components
+    /**
+     * The game engine for managing game logic.
+     */
+    private GameEngine engine;
+    /**
+     * The list of blocks in the game.
+     */
+    private final ArrayList<Block> blocks = new ArrayList<Block>();
+    /**
+     * The list of bonus (choco) blocks in the game.
+     */
+    private final ArrayList<Bonus> chocoBlock = new ArrayList<Bonus>();
+    /**
+     * The root pane of the GUI.
+     */
+    private Pane root;
+    /**
+     * The label displaying the score in the GUI.
+     */
+    private Label scoreLabel;
+
+    // Flags
+    /**
+     * The label displaying the remaining heart lives in the GUI.
+     */
+    private Label heartLabel;
+
+    // Buttons
+    private Label powerLabel;
+    /**
+     * The label displaying the current level in the GUI.
+     */
+    private Label levelLabel;
+    /**
+     * Indicates whether to load the game state from a save.
+     */
+    private boolean loadFromSave = false;
     /**
      * Indicates whether the gold status is active.
      */
@@ -330,7 +291,6 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
     private SoundPlayer heartPlayer;
     private SoundPlayer starPlayer;
     private SoundPlayer winPlayer;
-
 
 
     /**
@@ -396,70 +356,70 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
             level++;
             winPlayer.play();
 
-            if (level == 1){
+            if (level == 1) {
                 new Score().showMessage("Where am I?", this.primaryStage);
             }
-            if (level == 2){
+            if (level == 2) {
                 new Score().showMessage("Looks like I am gaining more power and growing as you destroy blocks, keep going!", this.primaryStage);
             }
-            if (level == 3){
+            if (level == 3) {
                 new Score().showMessage("What is this place? Am I in London? I sense something is not right...", this.primaryStage);
             }
-            if (level == 4){
+            if (level == 4) {
                 new Score().showMessage("It was an ILLUSION? We are under attack! Break more blocks so I can get stronger!", this.primaryStage);
             }
-            if (level == 5){
+            if (level == 5) {
                 new Score().showMessage("The city is not safe anymore, we need to go to the airport as soon as possible", this.primaryStage);
             }
-            if (level == 6){
+            if (level == 6) {
                 new Score().showMessage("The airport is not damaged yet! Lets hurry up!", this.primaryStage);
             }
-            if (level == 7){
+            if (level == 7) {
                 new Score().showMessage("What is that red light? Is it the aliens... we need to board a plane FAST!!", this.primaryStage);
             }
-            if (level == 8){
+            if (level == 8) {
                 new Score().showMessage("What is this green light? What is happening? HELPPPP", this.primaryStage);
             }
-            if (level == 9){
+            if (level == 9) {
                 new Score().showMessage("What just happened? Am I at the north pole? Those are the aurora lights! They are so pretty!! I am here for a purpose, lets go into that building and investigate further", this.primaryStage);
             }
-            if (level == 10){
+            if (level == 10) {
                 new Score().showMessage("Is that a rocket? I have never flown in one of those! Looks like the aliens are catching up, I guess there is a first for everything! :)", this.primaryStage);
             }
-            if (level == 11){
+            if (level == 11) {
                 new Score().showMessage("Andddddd... LIFTOFF!!! THIS IS AMAZING!!!!", this.primaryStage);
             }
-            if (level == 12){
+            if (level == 12) {
                 new Score().showMessage("Wait...Wait...Its too fast...Slow Down!!", this.primaryStage);
             }
-            if (level == 13){
+            if (level == 13) {
                 new Score().showMessage("Did I just blackou... woah IS THAT EARTH???", this.primaryStage);
             }
-            if (level == 14){
+            if (level == 14) {
                 new Score().showMessage("This is SO BEAUTIFUL!", this.primaryStage);
             }
-            if (level == 15){
+            if (level == 15) {
                 new Score().showMessage("I guess we have passed the moon now... where is this rocket taking me?", this.primaryStage);
             }
-            if (level == 16){
+            if (level == 16) {
                 new Score().showMessage("What was that flash...DID EARTH JUST EXPLODE?!?!?!?!", this.primaryStage);
             }
-            if (level == 17){
+            if (level == 17) {
                 new Score().showMessage("I see another ship in space! That must be the culprit! Lets follow it...but out fuel is running out! Nooo it's getting away!", this.primaryStage);
             }
-            if (level == 18){
+            if (level == 18) {
                 new Score().showMessage("Hey look there is another ship in space! It must be from the same fleet! Lets try to get on that one before it flies off too!", this.primaryStage);
             }
-            if (level == 19){
+            if (level == 19) {
                 new Score().showMessage("That was close...we almost didn't make it. We are in a completely different galaxy now... Is this their home?", this.primaryStage);
             }
-            if (level == 20){
+            if (level == 20) {
                 new Score().showMessage("We need to avenge our fallen planet, lets follow them into the portal!", this.primaryStage);
             }
-            if (level == 21){
+            if (level == 21) {
                 new Score().showMessage("Is that....god? NONO IT CANT BE!! EVERYTHING WE BELIEVED IN WAS A LIE!!", this.primaryStage);
             }
-            if (level == 22){
+            if (level == 22) {
                 new Score().showMessage("You have won my child, now rest in peace knowing your people have been avenged.", this.primaryStage);
             }
             if (level >= victoryLevel) {
@@ -486,9 +446,9 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
         levelLabel = new Label("Level: " + level);
         levelLabel.setTranslateY(20);
         heartLabel = new Label("Heart : " + heart);
-        heartLabel.setTranslateX(SCENE_WIDTH  - 70);
+        heartLabel.setTranslateX(SCENE_WIDTH - 70);
         powerLabel = new Label("Special : " + powerUp);
-        powerLabel.setTranslateX(SCENE_WIDTH  - 80);
+        powerLabel.setTranslateX(SCENE_WIDTH - 80);
         powerLabel.setTranslateY(20);
         if (!loadFromSave) {
             root.getChildren().addAll(rect, ball, scoreLabel, heartLabel, levelLabel, powerLabel, newGame, load);
@@ -498,7 +458,7 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
         for (Block block : blocks) {
             root.getChildren().add(block.rect);
         }
-        Scene scene = new Scene(root, SCENE_WIDTH , SCENE_HEIGHT);
+        Scene scene = new Scene(root, SCENE_WIDTH, SCENE_HEIGHT);
         scene.getStylesheets().add("style.css");
         scene.setOnKeyPressed(this);
 
@@ -550,7 +510,6 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
     }
 
 
-
     /**
      * Initialize the ball for the game.
      * <p>
@@ -562,7 +521,7 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
     // GUI initialization methods
     private void initBall() {
         Random random = new Random();
-        xBall = random.nextInt(SCENE_WIDTH ) + 1;
+        xBall = random.nextInt(SCENE_WIDTH) + 1;
         yBall = random.nextInt(SCENE_HEIGHT - 200) + ((level + diffLevel) * Block.getHeight()) + 15;
         ball = new Circle();
         ball.setRadius(ballRadius);
@@ -652,67 +611,67 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
                 break;
             case W:
                 level++;
-                if (level == 1){
-                    new Score().showMessage("Where am I?", this.primaryStage);;
+                if (level == 1) {
+                    new Score().showMessage("Where am I?", this.primaryStage);
                 }
-                if (level == 2){
+                if (level == 2) {
                     new Score().showMessage("Looks like I am gaining more power and growing as you destroy blocks, keep going!", this.primaryStage);
                 }
-                if (level == 3){
+                if (level == 3) {
                     new Score().showMessage("What is this place? Am I in London? I sense something is not right...", this.primaryStage);
                 }
-                if (level == 4){
+                if (level == 4) {
                     new Score().showMessage("It was an ILLUSION? We are under attack! Break more blocks so I can get stronger!", this.primaryStage);
                 }
-                if (level == 5){
+                if (level == 5) {
                     new Score().showMessage("The city is not safe anymore, we need to go to the airport as soon as possible", this.primaryStage);
                 }
-                if (level == 6){
+                if (level == 6) {
                     new Score().showMessage("The airport is not damaged yet! Lets hurry up!", this.primaryStage);
                 }
-                if (level == 7){
+                if (level == 7) {
                     new Score().showMessage("What is that red light? Is it the aliens... we need to board a plane FAST!!", this.primaryStage);
                 }
-                if (level == 8){
+                if (level == 8) {
                     new Score().showMessage("What is this green light? What is happening? HELPPPP", this.primaryStage);
                 }
-                if (level == 9){
+                if (level == 9) {
                     new Score().showMessage("What just happened? Am I at the north pole? Those are the aurora lights! They are so pretty!! L ets go into that building and investigate further", this.primaryStage);
                 }
-                if (level == 10){
+                if (level == 10) {
                     new Score().showMessage("Is that a rocket? I have never flown in one of those! Looks like the aliens are catching up, I guess there is a first for everything! :)", this.primaryStage);
                 }
-                if (level == 11){
+                if (level == 11) {
                     new Score().showMessage("Andddddd... LIFTOFF!!! THIS IS AMAZING!!!!", this.primaryStage);
                 }
-                if (level == 12){
+                if (level == 12) {
                     new Score().showMessage("Wait...Wait...Its too fast...Slow Down!!", this.primaryStage);
                 }
-                if (level == 13){
+                if (level == 13) {
                     new Score().showMessage("Did I just blackou... woah IS THAT EARTH???", this.primaryStage);
                 }
-                if (level == 14){
+                if (level == 14) {
                     new Score().showMessage("This is SO BEAUTIFUL!", this.primaryStage);
                 }
-                if (level == 15){
+                if (level == 15) {
                     new Score().showMessage("I guess we have passed the moon now... where is this rocket taking me?", this.primaryStage);
                 }
-                if (level == 16){
+                if (level == 16) {
                     new Score().showMessage("What was that flash...DID EARTH JUST EXPLODE?!?!?!?!", this.primaryStage);
                 }
-                if (level == 17){
+                if (level == 17) {
                     new Score().showMessage("I see another ship in space! That must be the culprit! Lets follow it...but out fuel is running out! Nooo it's getting away!", this.primaryStage);
                 }
-                if (level == 18){
+                if (level == 18) {
                     new Score().showMessage("Hey look there is another ship in space! It must be from the same fleet! Lets try to get on that one before it flies off too!", this.primaryStage);
                 }
-                if (level == 19){
+                if (level == 19) {
                     new Score().showMessage("That was close...we almost didn't make it. We are in a completely different galaxy now... Is this their home?", this.primaryStage);
                 }
-                if (level == 20){
+                if (level == 20) {
                     new Score().showMessage("We need to avenge our fallen planet, lets follow them into the portal!", this.primaryStage);
                 }
-                if (level == 21){
+                if (level == 21) {
                     new Score().showMessage("Is that....god? NONO IT CANT BE!! EVERYTHING WE BELIEVED IN WAS A LIE!!", this.primaryStage);
                 }
                 if (level == 22) {
@@ -729,7 +688,7 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
                 }
                 break;
             case C:
-                if(powerUp > 0){
+                if (powerUp > 0) {
                     vX = 2.000;
                     goDownBall = !goDownBall;
                     powerUp--;
@@ -885,7 +844,7 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
         // If gold ball status is active, increase score by 3 times
         if (isGoldStatus) {
             scoreMultiplier = 3;
-        }else {
+        } else {
             scoreMultiplier = 1;
         }
 
@@ -915,16 +874,12 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
                     //System.out.println("vX " + vX);
                 }
 
-                if (xBall - centerBreakX > 0) {
-                    collideToBreakAndMoveToRight = true;
-                } else {
-                    collideToBreakAndMoveToRight = false;
-                }
+                collideToBreakAndMoveToRight = xBall - centerBreakX > 0;
                 //System.out.println("collide2");
             }
         }
 
-        if (xBall >= SCENE_WIDTH ) {
+        if (xBall >= SCENE_WIDTH) {
             resetCollideFlags();
             //vX = 1.000;
             collideToRightWall = true;
@@ -937,11 +892,7 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
         }
 
         if (collideToBreak) {
-            if (collideToBreakAndMoveToRight) {
-                goRightBall = true;
-            } else {
-                goRightBall = false;
-            }
+            goRightBall = collideToBreakAndMoveToRight;
         }
 
         //Wall collide
@@ -1172,8 +1123,6 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
     }
 
 
-
-
     /**
      * Reset collision flags.
      * <p>
@@ -1344,7 +1293,7 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
             for (final Block block : blocks) {
                 int hitCode = block.checkHitToBlock(xBall, yBall);
                 if (hitCode != Block.NO_HIT) {
-                    score += (scoreMultiplier * 1);
+                    score += (scoreMultiplier);
 
                     new Score().show(block.xCoordinate, block.yCoordinate, 1, this.primaryStage);
 
@@ -1453,7 +1402,6 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
         //System.out.println("time is:" + time + " goldTime is " + goldTime);
 
     }
-
 
 
     /**

@@ -21,44 +21,13 @@ public class GameEngine {
     /**
      * The default frames per second (FPS) value.
      */
-    private int DEFAULT_FPS = 15;
-
-
-    /**
-     * The interface defining actions to be performed by the game engine.
-     */
-    public interface OnAction {
-        /**
-         * Called during each game update.
-         */
-        void onUpdate();
-
-        /**
-         * Called during the initialization phase.
-         */
-        void onInit();
-
-        /**
-         * Called during physics calculations.
-         */
-        void onPhysicsUpdate();
-
-        /**
-         * Called to update the game time.
-         *
-         * @param time The current time in the game.
-         */
-        void onTime(long time);
-    }
-
+    private final int DEFAULT_FPS = 15;
     private OnAction onAction;
     private int fps = 1000 / DEFAULT_FPS;
     private volatile boolean isStopped = true;
-
     private Thread updateThread;
     private Thread physicsThread;
     private Thread timeThread;
-
     private long time = 0;
 
     /**
@@ -69,9 +38,6 @@ public class GameEngine {
     public void setOnAction(OnAction onAction) {
         this.onAction = onAction;
     }
-
-
-
 
     /**
      * Sets the frames per second (FPS) for the game engine.
@@ -165,6 +131,33 @@ public class GameEngine {
             }
         });
         timeThread.start();
+    }
+
+    /**
+     * The interface defining actions to be performed by the game engine.
+     */
+    public interface OnAction {
+        /**
+         * Called during each game update.
+         */
+        void onUpdate();
+
+        /**
+         * Called during the initialization phase.
+         */
+        void onInit();
+
+        /**
+         * Called during physics calculations.
+         */
+        void onPhysicsUpdate();
+
+        /**
+         * Called to update the game time.
+         *
+         * @param time The current time in the game.
+         */
+        void onTime(long time);
     }
 
 

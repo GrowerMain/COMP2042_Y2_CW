@@ -52,14 +52,14 @@ public class Bonus implements Serializable {
      *
      * @param row    The row at which the bonus is located.
      * @param column The column at which the bonus is located.
-     * <p>
-     * Example usage:
-     * </p>
-     * <pre>
-     * {@code
-     * Bonus bonus = new Bonus(row, column);
-     * }
-     * </pre>
+     *               <p>
+     *               Example usage:
+     *               </p>
+     *               <pre>
+     *               {@code
+     *               Bonus bonus = new Bonus(row, column);
+     *               }
+     *               </pre>
      */
     public Bonus(int row, int column) {
         x = (column * (Block.getWidth())) + Block.getPaddingH() + (Block.getWidth() / 2) - 15;
@@ -99,7 +99,6 @@ public class Bonus implements Serializable {
 
         choco.setFill(new ImagePattern(new Image(url)));
     }
-
 
 
 }

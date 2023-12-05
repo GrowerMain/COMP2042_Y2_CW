@@ -34,17 +34,17 @@ public class BlockSerializable implements Serializable {
     /**
      * Constructs a {@code BlockSerializable} object with the specified row, column, and type.
      *
-     * @param row   The row of the block.
-     * @param j     The column of the block.
-     * @param type  The type of the block.
-     * <p>
-     * Example usage:
-     * </p>
-     * <pre>
-     * {@code
-     * BlockSerializable blockSerializable = new BlockSerializable(row, j, type);
-     * }
-     * </pre>
+     * @param row  The row of the block.
+     * @param j    The column of the block.
+     * @param type The type of the block.
+     *             <p>
+     *             Example usage:
+     *             </p>
+     *             <pre>
+     *             {@code
+     *             BlockSerializable blockSerializable = new BlockSerializable(row, j, type);
+     *             }
+     *             </pre>
      */
     public BlockSerializable(int row, int j, int type) {
         this.row = row;

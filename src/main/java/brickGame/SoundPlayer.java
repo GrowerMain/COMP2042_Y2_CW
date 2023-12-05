@@ -10,7 +10,7 @@ import java.io.File;
  * It utilizes the {@link javafx.scene.media.MediaPlayer} class to play sound from a specified file path.
  *
  * <p>
- *     Usage Example:
+ * Usage Example:
  * </p>
  * <pre>
  *     // Create a SoundPlayer instance with the path to a sound file
